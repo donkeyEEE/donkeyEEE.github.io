@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="#Github 学习笔记  决定学习一些信息相关的知识结合以前的学习经验总是copy完代码解决完问题就忘了下一次使用时又要重新搜索一来浪费了时间二来决定没有什么成就感于是乎就决定建立起一个自己的学习笔记库先以这种简单的方式放到网页上吧  #Github学习笔记1 推送至远程仓库  远程仓库顾名思义，是与我们本地仓库相对独立的另一个仓库。让我们先在 GitHub 上创建一个仓库，并将其设置为本地仓库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="github_studynotes">
+<meta property="og:url" content="http://example.com/2022/05/30/github-studynotes/index.html">
+<meta property="og:site_name" content="驴哲的摸鱼time">
+<meta property="og:description" content="#Github 学习笔记  决定学习一些信息相关的知识结合以前的学习经验总是copy完代码解决完问题就忘了下一次使用时又要重新搜索一来浪费了时间二来决定没有什么成就感于是乎就决定建立起一个自己的学习笔记库先以这种简单的方式放到网页上吧  #Github学习笔记1 推送至远程仓库  远程仓库顾名思义，是与我们本地仓库相对独立的另一个仓库。让我们先在 GitHub 上创建一个仓库，并将其设置为本地仓库">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-05-30T06:52:43.000Z">
+<meta property="article:modified_time" content="2022-05-30T08:04:19.668Z">
+<meta property="article:author" content="驴哲君">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/05/30/github-studynotes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>github_studynotes | 驴哲的摸鱼time</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">驴哲的摸鱼time</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">多言数穷，不如守中</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/30/github-studynotes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="驴哲君">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="驴哲的摸鱼time">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          github_studynotes
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-05-30 14:52:43 / 修改時間：16:04:19" itemprop="dateCreated datePublished" datetime="2022-05-30T14:52:43+08:00">2022-05-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index"><span itemprop="name">study_notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>#Github 学习笔记</p>
+<blockquote>
+<p>决定学习一些信息相关的知识<br>结合以前的学习经验<br>总是copy完代码<br>解决完问题就忘了<br>下一次使用时又要重新搜索<br>一来浪费了时间<br>二来决定没有什么成就感<br>于是乎就决定建立起一个自己的学习笔记库<br>先以这种简单的方式放到网页上吧</p>
+</blockquote>
+<p>#Github学习笔记1</p>
+<h1 id="推送至远程仓库"><a href="#推送至远程仓库" class="headerlink" title="推送至远程仓库"></a>推送至远程仓库</h1><hr>
+<blockquote>
+<p>远程仓库顾名思义，是与我们本地仓库相对独立的另一个仓库。让我们先在 GitHub 上创建一个仓库，并将其设置为本地仓库的远程仓库</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@github.com:github-book/git-tutorial.git</span><br></pre></td></tr></table></figure>
+<p>按照上述格式执行<strong>git remote add</strong>命令之后，Git 会自动将远程仓库的名称设置为<em>origin</em>（标识符）。</p>
+<hr>
+<p>如果想将当前分支下本地仓库中的内容推送给远程仓库，需要用到<br><em>git push</em>命令。(现在假定我们在 master 分支下进行操作。)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push -u origin master</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>像这样执行 <strong>git push</strong>命令，当前分支的内容就会被推送给远程仓库origin 的 master 分支。<br><strong>-u</strong>参数可以在推送的同时，将 origin 仓库的 master 分支设置为本地仓库当前分支的上游。添加了这个参数，将来运行 git pull命令从远程仓库获取内容时，本地仓库的这个分支就可以直接从 origin 的 master 分支获取内容，省去了另外添加参数的麻烦。</p>
+</blockquote>
+<p>执行该操作后，当前本地仓库 master 分支的内容将会被推送到GitHub 的远程仓库中。在 GitHub 上也可以确认远程 master 分支的内容和本地 master 分支相同。</p>
+<hr>
+<p>除了 master 分支之外，远程仓库也可以创建其他分支。<br>举个例子，我们在本地仓库中创建 <em>feature-D</em>分支，并将它以同名形式 push 至远程仓库。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b feature-D</span><br><span class="line">Switched to a new branch &#x27;feature-D&#x27;</span><br><span class="line"></span><br><span class="line">$ git push -u origin feature-D</span><br></pre></td></tr></table></figure>
+
+<p>我们在本地仓库中创建了 feature-D 分支，现在将它 push 给远程仓库并保持分支名称不变。现在，在远程仓库的 GitHub 页面就可以查看到 feature-D 分支了。</p>
+<hr>
+<h1 id="获取远程仓库"><a href="#获取远程仓库" class="headerlink" title="获取远程仓库"></a>获取远程仓库</h1><h2 id="git-clone——获取远程仓库"><a href="#git-clone——获取远程仓库" class="headerlink" title="git clone——获取远程仓库"></a>git clone——获取远程仓库</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@github.com:github-book/git-tutorial.git</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>执行 git clone命令后我们会默认处于 master 分支下，同时系统会自动将 origin 设置成该远程仓库的标识符,当前本地仓库的 master 分支与 GitHub 端远程仓库（origin）的 master 分支在内容上是完全相同的。</p>
+</blockquote>
+<h2 id="获取远程的-feature-D-分支"><a href="#获取远程的-feature-D-分支" class="headerlink" title="获取远程的 feature-D 分支"></a>获取远程的 feature-D 分支</h2><p>我们试着将 feature-D 分支获取至本地仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b feature-D origin/feature-D</span><br></pre></td></tr></table></figure>
+
+<p><em>-b</em>参数的后面是本地仓库中新建分支的名称。<br>新建分支名称后面是获取来源的分支名称。<br>*origin 在 <strong>git remote add</strong> 那一步中被当作远程仓库的名称了</p>
+<blockquote>
+<p>例子中指定了 <em>origin&#x2F;feature-D</em>，就是说以名为 origin 的仓库（这里指 GitHub 端的仓库）的 feature-D 分支为来源，在本地仓库中创建 feature-D 分支。</p>
+</blockquote>
+<h2 id="修改-feature-D-后，提交修改"><a href="#修改-feature-D-后，提交修改" class="headerlink" title="修改 feature-D 后，提交修改"></a>修改 <em>feature-D</em> 后，提交修改</h2><p>先提交本地</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -am &quot;Add feature-D&quot;</span><br></pre></td></tr></table></figure>
+<p>现在来推送 feature-D 分支。<br>直接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>从远程仓库获取 feature-D 分支，在本地仓库中提交更改，再将feature-D 分支推送回远程仓库，通过这一系列操作，就可以与其他开发者相互合作，共同培育 feature-D 分支，实现某些功能</p>
+</blockquote>
+<h2 id="git-pull——获取最新的远程仓库分支"><a href="#git-pull——获取最新的远程仓库分支" class="headerlink" title="git pull——获取最新的远程仓库分支"></a>git pull——获取最新的远程仓库分支</h2><p>当远程仓库有了提交更改后，这时我们就可以使用 git pull 命令，将本地的 feature-D 分支更新到最新状态。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull origin feature-D</span><br></pre></td></tr></table></figure>
+<p>GitHub 端远程仓库中的 feature-D 分支是最新状态，所以本地仓库中的 feature-D 分支就得到了更新。</p>
+<p>如果pull origin 就应该是更新master。</p>
+<blockquote>
+<p><strong>-u</strong>参数可以在推送的同时，将 origin 仓库的 master 分支设置为本地仓库当前分支的上游。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/29/dairy2/" rel="prev" title="dairy2">
+      <i class="fa fa-chevron-left"></i> dairy2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/30/hexo-studynotes/" rel="next" title="hexo_studynotes">
+      hexo_studynotes <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E8%87%B3%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">1.</span> <span class="nav-text">推送至远程仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">获取远程仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-clone%E2%80%94%E2%80%94%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">git clone——获取远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%9A%84-feature-D-%E5%88%86%E6%94%AF"><span class="nav-number">2.2.</span> <span class="nav-text">获取远程的 feature-D 分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-feature-D-%E5%90%8E%EF%BC%8C%E6%8F%90%E4%BA%A4%E4%BF%AE%E6%94%B9"><span class="nav-number">2.3.</span> <span class="nav-text">修改 feature-D 后，提交修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-pull%E2%80%94%E2%80%94%E8%8E%B7%E5%8F%96%E6%9C%80%E6%96%B0%E7%9A%84%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%88%86%E6%94%AF"><span class="nav-number">2.4.</span> <span class="nav-text">git pull——获取最新的远程仓库分支</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="驴哲君"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">驴哲君</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">驴哲君</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript"
+  color="0,0,255" opacity='0.3' zIndex="-2" count="120" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
