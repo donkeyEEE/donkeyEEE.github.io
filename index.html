@@ -410,10 +410,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-05-30 14:52:43 / 修改时间：16:04:19" itemprop="dateCreated datePublished" datetime="2022-05-30T14:52:43+08:00">2022-05-30</time>
+              <time title="创建时间：2022-05-30 14:52:43" itemprop="dateCreated datePublished" datetime="2022-05-30T14:52:43+08:00">2022-05-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-06-02 17:36:08" itemprop="dateModified" datetime="2022-06-02T17:36:08+08:00">2022-06-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -440,53 +446,14 @@
 <p>决定学习一些信息相关的知识<br>结合以前的学习经验<br>总是copy完代码<br>解决完问题就忘了<br>下一次使用时又要重新搜索<br>一来浪费了时间<br>二来决定没有什么成就感<br>于是乎就决定建立起一个自己的学习笔记库<br>先以这种简单的方式放到网页上吧</p>
 </blockquote>
 <p>#Github学习笔记1</p>
-<h1 id="推送至远程仓库"><a href="#推送至远程仓库" class="headerlink" title="推送至远程仓库"></a>推送至远程仓库</h1><hr>
-<blockquote>
-<p>远程仓库顾名思义，是与我们本地仓库相对独立的另一个仓库。让我们先在 GitHub 上创建一个仓库，并将其设置为本地仓库的远程仓库</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@github.com:github-book/git-tutorial.git</span><br></pre></td></tr></table></figure>
-<p>按照上述格式执行<strong>git remote add</strong>命令之后，Git 会自动将远程仓库的名称设置为<em>origin</em>（标识符）。</p>
-<hr>
-<p>如果想将当前分支下本地仓库中的内容推送给远程仓库，需要用到<br><em>git push</em>命令。(现在假定我们在 master 分支下进行操作。)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push -u origin master</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>像这样执行 <strong>git push</strong>命令，当前分支的内容就会被推送给远程仓库origin 的 master 分支。<br><strong>-u</strong>参数可以在推送的同时，将 origin 仓库的 master 分支设置为本地仓库当前分支的上游。添加了这个参数，将来运行 git pull命令从远程仓库获取内容时，本地仓库的这个分支就可以直接从 origin 的 master 分支获取内容，省去了另外添加参数的麻烦。</p>
-</blockquote>
-<p>执行该操作后，当前本地仓库 master 分支的内容将会被推送到GitHub 的远程仓库中。在 GitHub 上也可以确认远程 master 分支的内容和本地 master 分支相同。</p>
-<hr>
-<p>除了 master 分支之外，远程仓库也可以创建其他分支。<br>举个例子，我们在本地仓库中创建 <em>feature-D</em>分支，并将它以同名形式 push 至远程仓库。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b feature-D</span><br><span class="line">Switched to a new branch &#x27;feature-D&#x27;</span><br><span class="line"></span><br><span class="line">$ git push -u origin feature-D</span><br></pre></td></tr></table></figure>
-
-<p>我们在本地仓库中创建了 feature-D 分支，现在将它 push 给远程仓库并保持分支名称不变。现在，在远程仓库的 GitHub 页面就可以查看到 feature-D 分支了。</p>
-<hr>
-<h1 id="获取远程仓库"><a href="#获取远程仓库" class="headerlink" title="获取远程仓库"></a>获取远程仓库</h1><h2 id="git-clone——获取远程仓库"><a href="#git-clone——获取远程仓库" class="headerlink" title="git clone——获取远程仓库"></a>git clone——获取远程仓库</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@github.com:github-book/git-tutorial.git</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>执行 git clone命令后我们会默认处于 master 分支下，同时系统会自动将 origin 设置成该远程仓库的标识符,当前本地仓库的 master 分支与 GitHub 端远程仓库（origin）的 master 分支在内容上是完全相同的。</p>
-</blockquote>
-<h2 id="获取远程的-feature-D-分支"><a href="#获取远程的-feature-D-分支" class="headerlink" title="获取远程的 feature-D 分支"></a>获取远程的 feature-D 分支</h2><p>我们试着将 feature-D 分支获取至本地仓库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b feature-D origin/feature-D</span><br></pre></td></tr></table></figure>
-
-<p><em>-b</em>参数的后面是本地仓库中新建分支的名称。<br>新建分支名称后面是获取来源的分支名称。<br>*origin 在 <strong>git remote add</strong> 那一步中被当作远程仓库的名称了</p>
-<blockquote>
-<p>例子中指定了 <em>origin&#x2F;feature-D</em>，就是说以名为 origin 的仓库（这里指 GitHub 端的仓库）的 feature-D 分支为来源，在本地仓库中创建 feature-D 分支。</p>
-</blockquote>
-<h2 id="修改-feature-D-后，提交修改"><a href="#修改-feature-D-后，提交修改" class="headerlink" title="修改 feature-D 后，提交修改"></a>修改 <em>feature-D</em> 后，提交修改</h2><p>先提交本地</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -am &quot;Add feature-D&quot;</span><br></pre></td></tr></table></figure>
-<p>现在来推送 feature-D 分支。<br>直接</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>从远程仓库获取 feature-D 分支，在本地仓库中提交更改，再将feature-D 分支推送回远程仓库，通过这一系列操作，就可以与其他开发者相互合作，共同培育 feature-D 分支，实现某些功能</p>
-</blockquote>
-<h2 id="git-pull——获取最新的远程仓库分支"><a href="#git-pull——获取最新的远程仓库分支" class="headerlink" title="git pull——获取最新的远程仓库分支"></a>git pull——获取最新的远程仓库分支</h2><p>当远程仓库有了提交更改后，这时我们就可以使用 git pull 命令，将本地的 feature-D 分支更新到最新状态。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull origin feature-D</span><br></pre></td></tr></table></figure>
-<p>GitHub 端远程仓库中的 feature-D 分支是最新状态，所以本地仓库中的 feature-D 分支就得到了更新。</p>
-<p>如果pull origin 就应该是更新master。</p>
-<blockquote>
-<p><strong>-u</strong>参数可以在推送的同时，将 origin 仓库的 master 分支设置为本地仓库当前分支的上游。</p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/30/github-studynotes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
