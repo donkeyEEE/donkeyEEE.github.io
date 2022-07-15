@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="有一天想写点游记，随手学了一下怎么使用百度地图API 来画个地图。回家前一天几乎通宵完成了这个地图这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。现在只好重新来学一下了。  目标效果 能显示景区地图，最好可以实现两种地图切换 能显示景点坐标 能链接景点简介 能显示人的活动轨迹  材料 CSDN 百度api 百度地图拾取坐标系统 百度地图显示车辆运行轨迹（动态轨迹回放功能">
+  <meta name="description" content="有一天想写点游记，随手学了一下怎么使用百度地图API 来画个地图。回家前一天几乎通宵完成了这个地图这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。现在只好重新来学一下了。  目标效果 能显示景区地图，最好可以实现两种地图切换 能显示景点坐标 能链接景点简介 能显示人的活动轨迹  材料 CSDN 百度api 百度地图demo 百度地图拾取坐标系统 百度地图显示车辆运行轨迹">
 <meta property="og:type" content="article">
 <meta property="og:title" content="百度地图API">
 <meta property="og:url" content="http://example.com/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/index.html">
 <meta property="og:site_name" content="驴哲的摸鱼time">
-<meta property="og:description" content="有一天想写点游记，随手学了一下怎么使用百度地图API 来画个地图。回家前一天几乎通宵完成了这个地图这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。现在只好重新来学一下了。  目标效果 能显示景区地图，最好可以实现两种地图切换 能显示景点坐标 能链接景点简介 能显示人的活动轨迹  材料 CSDN 百度api 百度地图拾取坐标系统 百度地图显示车辆运行轨迹（动态轨迹回放功能">
+<meta property="og:description" content="有一天想写点游记，随手学了一下怎么使用百度地图API 来画个地图。回家前一天几乎通宵完成了这个地图这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。现在只好重新来学一下了。  目标效果 能显示景区地图，最好可以实现两种地图切换 能显示景点坐标 能链接景点简介 能显示人的活动轨迹  材料 CSDN 百度api 百度地图demo 百度地图拾取坐标系统 百度地图显示车辆运行轨迹">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-13T13:04:04.000Z">
-<meta property="article:modified_time" content="2022-07-13T15:00:45.441Z">
+<meta property="article:modified_time" content="2022-07-14T14:01:51.662Z">
 <meta property="article:author" content="驴哲君">
 <meta property="article:tag" content="地图">
 <meta name="twitter:card" content="summary">
@@ -190,10 +190,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-13 21:04:04 / 修改时间：23:00:45" itemprop="dateCreated datePublished" datetime="2022-07-13T21:04:04+08:00">2022-07-13</time>
+              <time title="创建时间：2022-07-13 21:04:04" itemprop="dateCreated datePublished" datetime="2022-07-13T21:04:04+08:00">2022-07-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-14 22:01:51" itemprop="dateModified" datetime="2022-07-14T22:01:51+08:00">2022-07-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -225,9 +231,11 @@
 </ul>
 <h2 id="材料"><a href="#材料" class="headerlink" title="材料"></a>材料</h2><ul>
 <li>CSDN</li>
-<li><a target="_blank" rel="noopener" href="https://lbsyun.baidu.com/jsdemo.htm#a1_2">百度api</a></li>
+<li><a target="_blank" rel="noopener" href="https://lbsyun.baidu.com/apiconsole/center#/home">百度api</a></li>
+<li><a target="_blank" rel="noopener" href="https://lbsyun.baidu.com/jsdemo.htm#a1_2">百度地图demo</a></li>
 <li><a target="_blank" rel="noopener" href="https://api.map.baidu.com/lbsapi/getpoint/index.html">百度地图拾取坐标系统</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/zgphacker2010/article/details/125641597?ops_request_misc=&request_id=&biz_id=102&utm_term=%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BE%E5%8F%AF%E4%BB%A5%E6%98%BE%E7%A4%BA%E8%BD%A8%E8%BF%B9%E5%90%97&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-1-125641597.142%5Ev32%5Epc_rank_34,185%5Ev2%5Etag_show&spm=1018.2226.3001.4187">百度地图显示车辆运行轨迹（动态轨迹回放功能）</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/js/js-tutorial.html">js菜鸟教程</a></li>
 </ul>
 <h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><ol>
 <li>翻到了上一次map的代码，感觉可以完成后三个任务。</li>
@@ -235,7 +243,26 @@
 <ul>
 <li>目前基本思路是使用之前的代码，换坐标文字可以实现大部分功能。</li>
 </ul>
-<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><p>7.13 现计划在16号前完成项目。现在写了大致的代码，搞定了地名和坐标。还需要实现更多功能，看能不能把百度地图Demo里的轨迹追踪加上去。还有覆盖物尺寸要改一下</p>
+<ol start="2">
+<li>写好html文件后，我准备再使用github搭建处一个网站。</li>
+<li><blockquote>
+<p>在我们获取到容器之后，根据自己的需求创建好自己的覆盖物对象之后，如果我们需要添加覆盖物的话，就可以使用<em>容器对象.addOverlay</em>(覆盖物对象);如果我们需要清除覆盖物的话，只需要使用<em>容器对象.clearOverlays()</em>;就可以清除所有，但是如果只是想清除某一个覆盖物的话，我们需要使用<em>容器对象.removeOverlays(覆盖物对象)</em>;</p>
+</blockquote>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var marker1 = new BMapGL.Marker(new BMapGL.Point(经度, 纬度));</span><br><span class="line">map.addOverlay(marker);</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><p>在<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/396052525">百度地图API基本使用（三）</a>里找到了一个路线规划的函数，使用DrivingRoute接口。</p>
+</li>
+<li><p>发现了<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45849072/article/details/124291840">百度地图实现路线规划（含途经点）</a>，里面代码可以实现带途径点的路径显示，可以在旅游结束后绘制处大致的行程图。</p>
+</li>
+</ol>
+<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><p>7.13 现计划在16号前完成项目。现在写了大致的代码，搞定了地名和坐标。还需要实现更多功能，看能不能把百度地图Demo里的轨迹追踪加上去。还有覆盖物尺寸要改一下<br>7.14 上午遇到了一点瓶颈。点标记marker的大小有些变化，现在在想办法调整其大小。另外API上的js函数看的我很头疼。</p>
+<ul>
+<li>点标记问题解决，是浏览器放缩的问题。文字和图片一起缩小，一开始还没看出来。</li>
+<li>好像需要javascript，html，css的知识，我翻到了菜鸟教程，遇到问题开始上去翻一下。<br>晚上找到了路径规划的代码块，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45849072/article/details/124291840">百度地图实现路线规划（含途经点）</a></li>
+<li>在引入路径规划时，涉及到了一个BMap和BMapGL的区别，将BMapGL修改成了BMap函数。。</li>
+</ul>
 
     </div>
 
@@ -257,7 +284,10 @@
     <a href="/2022/07/13/%E4%BA%8B%E6%83%85%E6%98%AF%E8%BF%99%E6%A0%B7%E7%9A%84/" rel="prev" title="事情是这样的">
       <i class="fa fa-chevron-left"></i> 事情是这样的
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/15/dnk%E5%B7%9D%E8%A5%BF%E6%B8%B8%E8%AE%B0/" rel="next" title="dnk川西游记">
+      dnk川西游记 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -332,7 +362,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -345,7 +375,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
