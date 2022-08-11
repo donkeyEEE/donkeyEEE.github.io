@@ -17,13 +17,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"donkeyeee.github.io.git","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"donkeyeee.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="有一天想写点游记，随手学了一下怎么使用百度地图API 来画个地图。回家前一天几乎通宵完成了这个地图这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。现在只好重新来学一下了。  目标效果 能显示景区地图，最好可以实现两种地图切换 能显示景点坐标 能链接景点简介 能显示人的活动轨迹  材料 CSDN 百度api 百度地图demo 百度地图拾取坐标系统 百度地图显示车辆运行轨迹">
 <meta property="og:type" content="article">
 <meta property="og:title" content="百度地图API">
-<meta property="og:url" content="https://donkeyeee.github.io.git/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/index.html">
+<meta property="og:url" content="https://donkeyeee.github.io/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/index.html">
 <meta property="og:site_name" content="驴哲的摸鱼time">
 <meta property="og:description" content="有一天想写点游记，随手学了一下怎么使用百度地图API 来画个地图。回家前一天几乎通宵完成了这个地图这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。现在只好重新来学一下了。  目标效果 能显示景区地图，最好可以实现两种地图切换 能显示景点坐标 能链接景点简介 能显示人的活动轨迹  材料 CSDN 百度api 百度地图demo 百度地图拾取坐标系统 百度地图显示车辆运行轨迹">
 <meta property="og:locale" content="zh_CN">
@@ -33,7 +33,7 @@
 <meta property="article:tag" content="地图">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://donkeyeee.github.io.git/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/">
+<link rel="canonical" href="https://donkeyeee.github.io/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/">
 
 
 <script id="page-configurations">
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://donkeyeee.github.io.git/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/">
+    <link itemprop="mainEntityOfPage" href="https://donkeyeee.github.io/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -221,7 +221,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>有一天想写点游记，随手学了一下怎么使用<a target="_blank" rel="noopener" href="https://lbsyun.baidu.com/jsdemo.htm#a1_2">百度地图API</a> 来画个地图。回家前一天几乎通宵完成了这个<a target="_blank" rel="noopener" href="https://donkeyeee.github.io/dnk_map/">地图</a><br>这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。<br>现在只好重新来学一下了。</p>
+        <p>有一天想写点游记，随手学了一下怎么使用<a target="_blank" rel="noopener" href="https://lbsyun.baidu.com/jsdemo.htm#a1_2">百度地图API</a> 来画个地图。回家前一天几乎通宵完成了这个<a href="https://donkeyeee.github.io/dnk_map/">地图</a><br>这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。<br>现在只好重新来学一下了。</p>
 <hr>
 <h2 id="目标效果"><a href="#目标效果" class="headerlink" title="目标效果"></a>目标效果</h2><ul>
 <li>能显示景区地图，最好可以实现两种地图切换</li>
@@ -265,7 +265,7 @@
 <li>加入路径规划后，基本设置已经完成。还需要进一步修饰，想办法实现效果一。</li>
 <li>后续还需要完善文本信息，想办法在信息框内添加超链接到我网站的页面上。</li>
 </ul>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总耗时三天，创建的map1.html文件中代码结构参考dnk_map，但是修改了<head>部分接口，以及创建覆盖点时将BMapGL改成了BMap，二者区别还没弄清。加入了路径规划功能，目前只能通过调节原代码来实现。将map1使用github创建了网页：<a target="_blank" rel="noopener" href="https://donkeyeee.github.io/dnk_map1/">蜀南游记图</a>。学习进度还比较缓慢，接触到了一点点JavaScript语言，并不会使用。</head></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总耗时三天，创建的map1.html文件中代码结构参考dnk_map，但是修改了<head>部分接口，以及创建覆盖点时将BMapGL改成了BMap，二者区别还没弄清。加入了路径规划功能，目前只能通过调节原代码来实现。将map1使用github创建了网页：<a href="https://donkeyeee.github.io/dnk_map1/">蜀南游记图</a>。学习进度还比较缓慢，接触到了一点点JavaScript语言，并不会使用。</head></p>
 
     </div>
 
