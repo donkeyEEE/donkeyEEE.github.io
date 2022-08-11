@@ -17,23 +17,23 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"donkeyeee.github.io.git","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="有一天想写点游记，随手学了一下怎么使用百度地图API 来画个地图。回家前一天几乎通宵完成了这个地图这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。现在只好重新来学一下了。  目标效果 能显示景区地图，最好可以实现两种地图切换 能显示景点坐标 能链接景点简介 能显示人的活动轨迹  材料 CSDN 百度api 百度地图demo 百度地图拾取坐标系统 百度地图显示车辆运行轨迹">
 <meta property="og:type" content="article">
 <meta property="og:title" content="百度地图API">
-<meta property="og:url" content="http://example.com/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/index.html">
+<meta property="og:url" content="https://donkeyeee.github.io.git/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/index.html">
 <meta property="og:site_name" content="驴哲的摸鱼time">
 <meta property="og:description" content="有一天想写点游记，随手学了一下怎么使用百度地图API 来画个地图。回家前一天几乎通宵完成了这个地图这周星期天又要出去旅游，现在又想做一个地图，但是完全忘了上一个是怎么做的了。现在只好重新来学一下了。  目标效果 能显示景区地图，最好可以实现两种地图切换 能显示景点坐标 能链接景点简介 能显示人的活动轨迹  材料 CSDN 百度api 百度地图demo 百度地图拾取坐标系统 百度地图显示车辆运行轨迹">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-13T13:04:04.000Z">
-<meta property="article:modified_time" content="2022-07-14T14:01:51.662Z">
+<meta property="article:modified_time" content="2022-07-15T09:58:18.515Z">
 <meta property="article:author" content="驴哲君">
 <meta property="article:tag" content="地图">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/">
+<link rel="canonical" href="https://donkeyeee.github.io.git/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/">
 
 
 <script id="page-configurations">
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/">
+    <link itemprop="mainEntityOfPage" href="https://donkeyeee.github.io.git/2022/07/13/%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEAPI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -198,7 +198,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-14 22:01:51" itemprop="dateModified" datetime="2022-07-14T22:01:51+08:00">2022-07-14</time>
+                <time title="修改时间：2022-07-15 17:58:18" itemprop="dateModified" datetime="2022-07-15T17:58:18+08:00">2022-07-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,8 +261,11 @@
 <ul>
 <li>点标记问题解决，是浏览器放缩的问题。文字和图片一起缩小，一开始还没看出来。</li>
 <li>好像需要javascript，html，css的知识，我翻到了菜鸟教程，遇到问题开始上去翻一下。<br>晚上找到了路径规划的代码块，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45849072/article/details/124291840">百度地图实现路线规划（含途经点）</a></li>
-<li>在引入路径规划时，涉及到了一个BMap和BMapGL的区别，将BMapGL修改成了BMap函数。。</li>
+<li>在引入路径规划时，涉及到了一个BMap和BMapGL的区别，将BMapGL修改成了BMap函数。。<br>7.15 想个性化地图但是加入代码块后，即没有改变地图样式，而且原来的覆盖物也全部消失了。 <del>无可奈何了属于是</del></li>
+<li>加入路径规划后，基本设置已经完成。还需要进一步修饰，想办法实现效果一。</li>
+<li>后续还需要完善文本信息，想办法在信息框内添加超链接到我网站的页面上。</li>
 </ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总耗时三天，创建的map1.html文件中代码结构参考dnk_map，但是修改了<head>部分接口，以及创建覆盖点时将BMapGL改成了BMap，二者区别还没弄清。加入了路径规划功能，目前只能通过调节原代码来实现。将map1使用github创建了网页：<a target="_blank" rel="noopener" href="https://donkeyeee.github.io/dnk_map1/">蜀南游记图</a>。学习进度还比较缓慢，接触到了一点点JavaScript语言，并不会使用。</head></p>
 
     </div>
 
@@ -281,8 +284,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/07/13/%E4%BA%8B%E6%83%85%E6%98%AF%E8%BF%99%E6%A0%B7%E7%9A%84/" rel="prev" title="事情是这样的">
-      <i class="fa fa-chevron-left"></i> 事情是这样的
+    <a href="/2022/07/07/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" rel="prev" title="C语言学习">
+      <i class="fa fa-chevron-left"></i> C语言学习
     </a></div>
       <div class="post-nav-item">
     <a href="/2022/07/15/dnk%E5%B7%9D%E8%A5%BF%E6%B8%B8%E8%AE%B0/" rel="next" title="dnk川西游记">
@@ -346,7 +349,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E6%95%88%E6%9E%9C"><span class="nav-number">1.</span> <span class="nav-text">目标效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%90%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">材料</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0"><span class="nav-number"></span> <span class="nav-text">笔记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-number"></span> <span class="nav-text">日志</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E6%95%88%E6%9E%9C"><span class="nav-number">1.</span> <span class="nav-text">目标效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%90%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">材料</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0"><span class="nav-number"></span> <span class="nav-text">笔记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-number"></span> <span class="nav-text">日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number"></span> <span class="nav-text">总结</span></a></div>
       </div>
       <!--/noindex-->
 
@@ -362,20 +365,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
