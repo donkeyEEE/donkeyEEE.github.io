@@ -193,7 +193,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-04 19:55:12" itemprop="dateModified" datetime="2022-08-04T19:55:12+08:00">2022-08-04</time>
+                <time title="修改时间：2022-08-11 14:55:20" itemprop="dateModified" datetime="2022-08-11T14:55:20+08:00">2022-08-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,7 +231,10 @@
 </ul>
 <hr>
 <p>又遇到了双子列最值问题，我用分治法加模拟，结果AC了一部分，还有几个WA和TLE，应该是因为算法话不够简单，O(n^2)应该想办法优化。 </p>
-<h1 id="单向链表"><a href="#单向链表" class="headerlink" title="单向链表"></a>单向链表</h1>
+<h1 id="单向链表"><a href="#单向链表" class="headerlink" title="单向链表"></a>单向链表</h1><hr>
+<h1 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h1><p>创建树——creatTree<br>自身经验，用数组方便调整结构，用链表更容易查找</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct _tree</span><br><span class="line">&#123;</span><br><span class="line">    char data;</span><br><span class="line">    int left;</span><br><span class="line">    int right;</span><br><span class="line">&#125;Treearr1[10],Treearr2[10];   // 节点列表，数组储存</span><br><span class="line"></span><br><span class="line">// 链表形式</span><br><span class="line">typedef struct TNode *Position;</span><br><span class="line">typedef Position BinTree; /* 二叉树类型 */</span><br><span class="line">struct TNode&#123; /* 树结点定义 */</span><br><span class="line">    ElementType Data; /* 结点数据 */</span><br><span class="line">    BinTree Left;     /* 指向左子树 */</span><br><span class="line">    BinTree Right;    /* 指向右子树 */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -281,7 +284,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-11 00:36:19" itemprop="dateModified" datetime="2022-08-11T00:36:19+08:00">2022-08-11</time>
+                <time title="修改时间：2022-08-11 17:05:39" itemprop="dateModified" datetime="2022-08-11T17:05:39+08:00">2022-08-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -371,9 +374,21 @@
 <li>晚上主要是练习和修改代码。</li>
 </ul>
 <h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><ol>
-<li>今天碰到了一道RE加TLE的题目，<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1217%EF%BC%8C%E9%9C%80%E8%A6%81%E6%94%B9%E8%BF%9B%E4%B8%80%E4%B8%8B%E7%AE%97%E6%B3%95%E3%80%82%E6%B6%89%E5%8F%8A%E5%88%B0%E4%BA%86%E8%B4%A8%E6%95%B0%E5%92%8C%E5%9B%9E%E6%96%87%E6%95%B0%E7%9A%84%E5%88%A4%E6%96%AD%E3%80%82%E5%9F%83%E6%B0%8F%E7%AD%9B%E9%80%89%E6%B3%95">https://www.luogu.com.cn/problem/P1217，需要改进一下算法。涉及到了质数和回文数的判断。埃氏筛选法</a></li>
+<li><p>今天碰到了一道RE加TLE的题目，<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1217%EF%BC%8C%E9%9C%80%E8%A6%81%E6%94%B9%E8%BF%9B%E4%B8%80%E4%B8%8B%E7%AE%97%E6%B3%95%E3%80%82%E6%B6%89%E5%8F%8A%E5%88%B0%E4%BA%86%E8%B4%A8%E6%95%B0%E5%92%8C%E5%9B%9E%E6%96%87%E6%95%B0%E7%9A%84%E5%88%A4%E6%96%AD%E3%80%82%E5%9F%83%E6%B0%8F%E7%AD%9B%E9%80%89%E6%B3%95">https://www.luogu.com.cn/problem/P1217，需要改进一下算法。涉及到了质数和回文数的判断。埃氏筛选法</a></p>
+</li>
+<li><p>在写结构时犯了些错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _tree</span><br><span class="line">&#123;</span><br><span class="line">    char data;</span><br><span class="line">    int left;</span><br><span class="line">    int right;</span><br><span class="line">&#125; *tree;</span><br><span class="line">tree Treearr1[10],Treearr2[10];   // 指针数组里储存的是指针</span><br><span class="line"></span><br><span class="line">//所以</span><br><span class="line">Treearr1[i]-&gt;data  // fault</span><br></pre></td></tr></table></figure></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct _tree</span><br><span class="line">&#123;</span><br><span class="line">    char data;</span><br><span class="line">    int left;</span><br><span class="line">    int right;</span><br><span class="line">&#125;Treearr1[10],Treearr2[10];   // 节点列表，数组储存</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>memset(mark,-1,sizeof(mark));&#x2F;&#x2F;mark数组初始化为-1</p>
+</li>
+<li><p>判断素数优化算法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;math.h&gt;</span><br><span class="line">int isprime(int a)              //定义求素数的函数，是返回1，不是返回0；</span><br><span class="line">&#123;</span><br><span class="line">	int i,bz=0;</span><br><span class="line">	for(i=2;i&lt;=sqrt(a);i++)//求开方前的约数，减少计算量</span><br><span class="line">	&#123;  </span><br><span class="line">		if(a%i==0)</span><br><span class="line">		&#123;</span><br><span class="line">			bz=1;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	if(bz==0&amp;&amp;a!=1)</span><br><span class="line">		return 1;</span><br><span class="line">	else</span><br><span class="line">		return 0;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
 </ol>
 <h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><p>8.1 建军节。三个方向都开始进行了，做了四道洛谷，感觉到还不够熟练。在B站上看到了全局变量，文件那里。数学竞赛制定好了计划，在网上找到了张宇30讲，手上还有两本教材，现在目标是过完考研数一内容并且对标国赛。晚上看mooc上数据结构的教程。早上还跑了步。感觉今天的进度还是比较慢。<br>8.2 上午看到了大程序涉及，和创建项目有关，但是我还没有时间过。上午碰到的算法题还有点难度。下午看了三节数学竞赛，感觉一章内容有三四小时，之后要花更多时间在这上面，还有刷题。晚上眼镜坏了，没看书。<br>8.3 配眼镜加上网，高数第一讲还差一个视频，每天不跑步了，早点起来看完一二节内容。晚上学了数据结构的第一章。学了一个最大子列和问题，算是初步接触到了算法吧。<br>8.4 上午看完了第二讲，但是练习还差一点。下午又开通了一个做题网站PAT。在上面有mooc留下的课后题，还挺多的，每一节有两三个。现在进度大概是一天半看完一章和做完一章的内容，希望明天能多学一点。周末要出去旅游了，耽搁两天多。回来就快要返校了，有没有可能获得mooc的证书呢？还得要再努力一点吧。抽空再多看看书吧。<br>8.7 又旅游去了，玩了三天，开了很久车，今晚上也不打算学太多。而且参加的三国志11，进行外交已经把我整心累了，接下来就种田算了，别浪费太多时间就行。晚上还是准备复习一下数学，然后之前还没有写完的代码也完善一下。出去玩的期间，加入了一个叫01星球的组织，花了10块钱咨询，得到了些学习路径的建议，准备多偏向于PAT网站的练习，并且加速专业课的学习。<br>8.8 上午数学竞赛函数节看了一半了，还有的留给明天了。下午把之前PAT上的一道题过了，单向链表。之后死磕了一道链表反转，一开始连结构体都解决不了，然后搜了一个题解，看了大概一个多小时，现在还没有完全看懂。。。烦死了！！！看了大话数据结构那本书，感觉理解更深了。明天就直接看下一章吧。<br>8.9 今天报名了PAT的比赛，是和考研有关的比赛。蓝桥杯在年后了，所以说今年先准备两项比赛：<strong>九月四号 PAT</strong>，<strong>十一月 数学竞赛</strong>。现在要调整一下计划了，在剩下的时间要多学计算机了。<br>8.10 刚刚写完代码已经过了零点，我说怎么没有前一天的记忆了。上午学完了函数极限于连续性，视频和绿皮都刷了，明天上午继续下一章，下午写了个mooc_pat的题<a target="_blank" rel="noopener" href="https://pintia.cn/problem-sets/1532176225467338752/problems/1536332594198343683">1003 我要通过</a>,程序在<strong>mooc_pat_02.c</strong>，用结构题实现了栈，其中定义了top和capacity两int很是精髓，下一步应该多看看题。下午出去了，晚上看到了树，明天争取看完树的mooc，再多刷两道题。</p>
+<p>8.11 上午看完了mooc树（上），开始做课后题，还是去找了标准代码。主要是用数组实现二叉树，自己手撕也用了一个小时，犯了好多小错误不然完成的更快，应该写点笔记。</p>
 
       
     </div>
