@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>量纲分析法推导传热系数 | 驴哲的摸鱼time</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
+<meta property="og:type" content="article">
+<meta property="og:title" content="量纲分析法推导传热系数">
+<meta property="og:url" content="https://donkeyeee.github.io/2022/09/26/%E9%87%8F%E7%BA%B2%E5%88%86%E6%9E%90%E6%B3%95%E6%8E%A8%E5%AF%BC%E4%BC%A0%E7%83%AD%E7%B3%BB%E6%95%B0/index.html">
+<meta property="og:site_name" content="驴哲的摸鱼time">
+<meta property="og:description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-26T01:09:20.000Z">
+<meta property="article:modified_time" content="2022-09-30T00:55:37.175Z">
+<meta property="article:author" content="驴哲君">
+<meta property="article:tag" content="现学现用">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="驴哲的摸鱼time" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">驴哲的摸鱼time</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">多言数穷，不如守中</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://donkeyeee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-量纲分析法推导传热系数" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/09/26/%E9%87%8F%E7%BA%B2%E5%88%86%E6%9E%90%E6%B3%95%E6%8E%A8%E5%AF%BC%E4%BC%A0%E7%83%AD%E7%B3%BB%E6%95%B0/" class="article-date">
+  <time class="dt-published" datetime="2022-09-26T01:09:20.000Z" itemprop="datePublished">2022-09-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      量纲分析法推导传热系数
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>那天做另一个网站时，懒得重新下载next组件，就打算直接把这个网站的next文件放过去，没想到中途出了错，把原来的文件丢了。现在只能试着用备用的主题了。凑合看看，最近没精力搞这个。<br>早饭时碰到了一个研究生学长，他还以为我已经去了另一个系了。<em>哎</em>，不由感叹，好事不出门，坏事传千里。<br>上周学了个量纲分析法，忽然想到环工原有两三个公式是用量纲分析法推出来的。故想着试着自己动个手算一下，弥补一下当时的糊里糊涂。<br>其实好多东西眼下学着感觉没啥用，之后回看才发现道理颇深。</p>
+<span id="more"></span>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>话说大二专业课有一门环境工程原理，在推导努塞尔特数Nu时用到了量纲分析。那好，就拿你开刀。<br>啊，你不知道啥是努塞尔特数？<br>这得先从传热系数说起了。</p>
+<h2 id="牛顿冷却定律–传热系数的前世今生"><a href="#牛顿冷却定律–传热系数的前世今生" class="headerlink" title="牛顿冷却定律–传热系数的前世今生"></a>牛顿冷却定律–<em>传热系数的前世今生</em></h2><p>$ dQ&#x3D;\alpha dA\Delta T $<br>这公式理论上倒是可以把流体在不同情况下的传热速率计算出来<br>再带点环境工程的应用特色，简化一下，成方便使用的形式<br>就是 $$Q&#x3D;\alpha A\Delta T $$<br><strong>原来热量分别和面积(A)和温差$\Delta T$ 成正比呀</strong><br>那就只需要算出他们的系数 $\alpha $ 了</p>
+<h2 id="量纲分析"><a href="#量纲分析" class="headerlink" title="量纲分析"></a>量纲分析</h2><p>实验说明，这 $ \alpha$ 和好多东西有关系，那我们就先列出来：</p>
+<table>
+<thead>
+<tr>
+<th>物理量</th>
+<th>符号</th>
+<th>单位</th>
+<th>量纲</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>传热系数</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>流速</td>
+<td>u</td>
+<td>m&#x2F;s</td>
+<td>$LT^{-1} $</td>
+</tr>
+<tr>
+<td>换热面尺寸</td>
+<td>L</td>
+<td>m</td>
+<td>$L $</td>
+</tr>
+<tr>
+<td>粘度</td>
+<td>$\mu $</td>
+<td>kg&#x2F;(m*s)</td>
+<td>$ML^{-1}T^{-1} $</td>
+</tr>
+<tr>
+<td>导热系数</td>
+<td>$\lambda $</td>
+<td>W&#x2F;(m·K)</td>
+<td>$MLKT^{-2}$</td>
+</tr>
+<tr>
+<td>密度</td>
+<td>$\rho $</td>
+<td>$kg&#x2F;m^{3} $</td>
+<td>$ML^{-3}$</td>
+</tr>
+<tr>
+<td>比定压热容</td>
+<td>Cp</td>
+<td>J&#x2F;(kg·K)</td>
+<td>$LT^{-2}K^{-1}$</td>
+</tr>
+<tr>
+<td>升浮力</td>
+<td>$\rho\beta g\Delta T $</td>
+<td>N</td>
+<td>$MLT^{-2}$</td>
+</tr>
+</tbody></table>
+<p>昨天喝了假酒，今天一天都晕乎乎的，直接拿我之前的手稿打上去了，没有细看，错了再说。</p>
+<p>我们以及知道了传热系数和上面几位有关系了，那具体有啥关系呢？<br>线性组合？还是乘在一起？<br><strong>量纲分析法告诉我们，一切其他导出量的量纲可按定义或客观规律表成这基本量的量纲组合。</strong><br>所以我们假设将这些物理量按照某种方式组合在一起能拼一个传热系数出来。</p>
+<p>我们假设这七个物理量乘在一起能导出传热系数<br>所以<br>$$  \alpha &#x3D;f(u,L,\mu,\lambda,\rho,Cp,\rho\beta g\Delta T) $$<br>再变换一下：<br>$$  F(\alpha,u,L,\mu,\lambda,\rho,Cp,\rho\beta g\Delta T)&#x3D;1 $$<br>所以设其次数为$x_1 到 x_8 $<br>再设一个常数k<br>就有：$$ k(\alpha ^ {x_1} <em>u^{x_2} * L^{x_3} * \mu ^ {x_4}</em> \lambda ^ {x_5} * \rho ^ {x_6} * Cp^{x_7}* (\rho\beta g\Delta T)^{x_8})&#x3D;1   $$<br>下面我们要做的就是解出X1 — X8</p>
+<p>换成量纲形式，就是要让基本量纲的组合使得结果导出量的量纲为1</p>
+<p>在我的印象里，老师就让我们开始解方程了</p>
+<p>显然是一个齐次线性方程组<br>啥？你不知道什么是齐次线性方程组？<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%BD%90%E6%AC%A1%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/2225933">点我</a><br>我们有8个未知数，每个未知数对应的量纲可以用四个基本量纲表示：L,M,T,K</p>
+<h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3><p>这时候我们换一个工具：<strong>矩阵</strong><br>为啥要用？等会就知道了<br>我们整一个 <strong>量纲矩阵:</strong><br>有八列代表八个未知数，四行代表四个基本量纲。矩阵元素就是未知数的量纲表示。</p>
+<p><strong>比如：</strong><br>速度u的量纲为$LT^{-1} $ 他是表格第二个量<br>所以第二列元素为：（1,0,-1,0）<br>$$<br>A&#x3D;<br>\begin{pmatrix}<br>    0&amp;1&amp;1&amp;-1&amp;1&amp;-3&amp;1&amp;1\<br>    -1&amp;0&amp;0&amp;1&amp;1&amp;1&amp;0&amp;1\<br>    2&amp;-1&amp;0&amp;-1&amp;-2&amp;0&amp;-2&amp;-2\<br>    -1&amp;0&amp;0&amp;0&amp;1&amp;0&amp;-1&amp;0\<br>\end{pmatrix}<br>$$</p>
+<blockquote>
+<p>md文件好像不支持标注行列属性？<br>我下次多研究一下</p>
+</blockquote>
+<p>矩阵列数大于行数啦，代表有无数解<br>基础解系的维数是 <strong>n-rankA</strong> &#x3D;4</p>
+<p>接下来改接矩阵了<br>其实我也忘了怎么解矩阵，我想到了两个解决方法：</p>
+<ul>
+<li>请教数院朋友或大一学弟</li>
+<li>用python</li>
+</ul>
+<p>我决定先是用python来解这个齐次线性方程组</p>
+<p>了解到python科学计算经常用的numpy可以借方程组<br><strong>不过</strong></p>
+<blockquote>
+<p>用这个模块求解矩阵方程时，有一个缺点，就是：</p>
+</blockquote>
+<p>系数矩阵A必须为n×n<br>相应的b矩阵为n×m<br>坏了，我这里量纲矩阵不是方阵，所以numpy不太适合<br>  <em>tnnd</em><br>不管是numpy还是Sympy，我看到的都只能解方阵<br>那我干脆试着用其他方式试试</p>
+<h3 id="自己写个函数！！"><a href="#自己写个函数！！" class="headerlink" title="自己写个函数！！"></a><strong>自己写个函数！！</strong></h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/shenliang1985/article/details/114979670">线性代数之基础解系与通解的求法</a><br>我用C语言写了个函数，为了节约空间就不写在这里了</p>
+<p>解出四个基础解系为：</p>
+<p>9.30 忽然发现解法有点问题。。。<br>最近也比较忙就放在这里等我有空了在做吧</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://donkeyeee.github.io/2022/09/26/%E9%87%8F%E7%BA%B2%E5%88%86%E6%9E%90%E6%B3%95%E6%8E%A8%E5%AF%BC%E4%BC%A0%E7%83%AD%E7%B3%BB%E6%95%B0/" data-id="cl8iwwqnf0023f8ul2itn0u10" data-title="量纲分析法推导传热系数" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8E%B0%E5%AD%A6%E7%8E%B0%E7%94%A8/" rel="tag">现学现用</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/09/08/Spark%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Spark深度学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/study-notes/">study_notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%91%98%E6%8A%84/">摘抄</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%A5%E8%AE%B0/">日记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E8%AE%B0/">游记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99%E5%BA%8F/">网站序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A6%96%E9%A1%B5/">首页</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag">C语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9C%E6%99%8B%E9%97%A8%E9%98%80%E6%94%BF%E6%B2%BB/" rel="tag">东晋门阀政治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9C%B0%E5%9B%BE/" rel="tag">地图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" rel="tag">学习资料</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%9D%E8%A5%BF/" rel="tag">川西</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%B0%E5%AD%A6%E7%8E%B0%E7%94%A8/" rel="tag">现学现用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B4%A0%E6%9D%90/" rel="tag">素材</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%9C%AC%E8%AE%BA/" rel="tag">资本论</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 20px;">C语言</a> <a href="/tags/%E4%B8%9C%E6%99%8B%E9%97%A8%E9%98%80%E6%94%BF%E6%B2%BB/" style="font-size: 10px;">东晋门阀政治</a> <a href="/tags/%E5%9C%B0%E5%9B%BE/" style="font-size: 10px;">地图</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" style="font-size: 10px;">学习资料</a> <a href="/tags/%E5%B7%9D%E8%A5%BF/" style="font-size: 10px;">川西</a> <a href="/tags/%E7%8E%B0%E5%AD%A6%E7%8E%B0%E7%94%A8/" style="font-size: 10px;">现学现用</a> <a href="/tags/%E7%B4%A0%E6%9D%90/" style="font-size: 10px;">素材</a> <a href="/tags/%E8%B5%84%E6%9C%AC%E8%AE%BA/" style="font-size: 10px;">资本论</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/09/26/%E9%87%8F%E7%BA%B2%E5%88%86%E6%9E%90%E6%B3%95%E6%8E%A8%E5%AF%BC%E4%BC%A0%E7%83%AD%E7%B3%BB%E6%95%B0/">量纲分析法推导传热系数</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/08/Spark%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Spark深度学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/07/%E5%B7%A6%E6%89%8B%E6%8C%87%E6%9C%88/">左手指月</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/07/%E5%85%B0%E4%BA%AD%E9%9B%86/">兰亭集</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/07/%E6%AD%8C%E8%AF%8D%E9%9B%86/">歌词集</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 驴哲君<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":false},"log":false});</script></body>
+</html>
