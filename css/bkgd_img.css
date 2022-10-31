@@ -1,0 +1,9 @@
+
+#web_bg {
+  /* 背景图像的地址（url括号里）  */
+  background: url(https://img9.vilipix.com/picture/pages/regular/2022/05/23/20/47/98520033_p0_master1200.jpg?x-oss-process=image/resize,m_fill,w_1000);
+  /* 背景图像不重复 */
+  background-repeat: no-repeat;
+  /* 背景图像大小 */
+  background-size: cover;
+}
