@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>EEE——二极管 | 驴哲的摸鱼time</title><meta name="author" content="驴哲君"><meta name="copyright" content="驴哲君"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="电工学之二极管笔记整理。参考资料半导体基础知识（2）：PN结二极管和二极管特性 PN结和二极管 当我们将n型半导体与p型半导体相邻放置时，一切都会改变。  PN结的结构先来看看PN结的结构         左边的实心圆是空穴，右边的实心圆是电子。 n型半导体的自由电子向左扩散，结合P的空穴（这些重新结合的空穴由带圆圈的负号表示）。 同时因为N型的电子扩散，会形成正电的区域。（这个部分也可以看作是左">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EEE——二极管">
+<meta property="og:url" content="https://donkeyeee.github.io/2022/11/10/EEE/index.html">
+<meta property="og:site_name" content="驴哲的摸鱼time">
+<meta property="og:description" content="电工学之二极管笔记整理。参考资料半导体基础知识（2）：PN结二极管和二极管特性 PN结和二极管 当我们将n型半导体与p型半导体相邻放置时，一切都会改变。  PN结的结构先来看看PN结的结构         左边的实心圆是空穴，右边的实心圆是电子。 n型半导体的自由电子向左扩散，结合P的空穴（这些重新结合的空穴由带圆圈的负号表示）。 同时因为N型的电子扩散，会形成正电的区域。（这个部分也可以看作是左">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&h=255&c=7&r=0&o=5&dpr=1.4&pid=1.7">
+<meta property="article:published_time" content="2022-11-10T11:40:19.000Z">
+<meta property="article:modified_time" content="2022-11-11T05:47:37.991Z">
+<meta property="article:author" content="驴哲君">
+<meta property="article:tag" content="电工学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&h=255&c=7&r=0&o=5&dpr=1.4&pid=1.7"><link rel="shortcut icon" href="/img/favicon.svg"><link rel="canonical" href="https://donkeyeee.github.io/2022/11/10/EEE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EEE——二极管',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-11 13:47:37'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet"  href="/css/post_bkgd.css"><link rel="stylesheet"  href="/css/custom.css"><link rel="stylesheet"  href="/css/mouse.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/Avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/myself"><i class="fa-fw /myself/"></i><span> 1</span></a></li><li><a class="site-page child" href="/butterfly"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 2</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&amp;h=255&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">驴哲的摸鱼time</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/myself"><i class="fa-fw /myself/"></i><span> 1</span></a></li><li><a class="site-page child" href="/butterfly"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 2</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">EEE——二极管</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-10T11:40:19.000Z" title="发表于 2022-11-10 19:40:19">2022-11-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-11T05:47:37.991Z" title="更新于 2022-11-11 13:47:37">2022-11-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="EEE——二极管"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="电工学之二极管笔记整理。"><a href="#电工学之二极管笔记整理。" class="headerlink" title="电工学之二极管笔记整理。"></a>电工学之二极管笔记整理。</h1><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/143791710?utm_campaign=shareopn&utm_medium=social&utm_oi=1044957870005190656&utm_psn=1573750214053351424&utm_source=wechat_session">半导体基础知识（2）：PN结二极管和二极管特性</a></p>
+<h2 id="PN结和二极管"><a href="#PN结和二极管" class="headerlink" title="PN结和二极管"></a>PN结和二极管</h2><blockquote>
+<p>当我们将n型半导体与p型半导体相邻放置时，一切都会改变。</p>
+</blockquote>
+<h3 id="PN结的结构"><a href="#PN结的结构" class="headerlink" title="PN结的结构"></a>PN结的结构</h3><div class="hide-block"><button type="button" class="hide-button" style>先来看看PN结的结构
+    </button><div class="hide-content"><p><img src="https://pic2.zhimg.com/80/v2-68284c76da35a0271dd0aef1a9117c71_720w.webp"></p>
+</div></div>
+
+<ul>
+<li>左边的实心圆是空穴，右边的实心圆是电子。</li>
+<li>n型半导体的自由电子向左扩散，结合P的空穴（这些重新结合的空穴由带圆圈的负号表示）。</li>
+<li>同时因为N型的电子扩散，会形成正电的区域。（这个部分也可以看作是左边的空穴扩散到了右边形成的）</li>
+<li>中间区域就是耗尽区，该复合导致耗尽区的p型部分带负电，并且耗尽区的n型部分带正电。</li>
+</ul>
+<p>dnk说：<strong>一切问题都和耗尽区有关。</strong></p>
+<p>耗尽区电荷的分离会导致电位差，称为壁垒电压。在硅pn结二极管中，接触电势约为0.6V。<br><strong>如上图所示，该电势的极性与我们预期的相反：在n型侧为正，而在p型侧为负。</strong></p>
+<p>这时候内电场方向？ <span class="hide-inline"><button type="button" class="hide-button" style="background-color: #FF7242;color: #fff">查看答案
+  </button><span class="hide-content">N-->P</span></span></p>
+<blockquote>
+<p>在还没有在一起时，P型参杂了3价元素，空穴为多子；N型掺杂了5价元素，电子为多子；在刚开始学时，很容易认为内电场是P-&gt;N。</p>
+</blockquote>
+<h3 id="PN结与电压"><a href="#PN结与电压" class="headerlink" title="PN结与电压"></a>PN结与电压</h3><p>还记得内电场的方向吗？ 从N–&gt;P<br>内电场电压叫？<span class="hide-inline"><button type="button" class="hide-button" style="background-color: #FF7242;color: #fff">查看答案
+  </button><span class="hide-content">壁垒电压</span></span></p>
+<p>如果我们将PN结连入一个提供和内电场相同方向的外电场的电路中。也就是外电场方向：N(+)–&gt;P(-)<br>也就是这样<br><img width src="https://pic2.zhimg.com/80/v2-806841202d3f7c2b329930719e906879_720w.webp"></p>
+<p>这时耗尽区会变宽，同时势垒电压增加，因此扩散电流进一步受到阻碍。我们称这时为：<strong>反向偏置</strong></p>
+<hr>
+<h4 id="反向偏置"><a href="#反向偏置" class="headerlink" title="反向偏置"></a>反向偏置</h4><p>提几个问题：</p>
+<ol>
+<li><p>反向偏置时有电流吗？</p>
+</li>
+<li><p>耗尽区会一直扩大吗？最大之后电压怎么变呢？</p>
+</li>
+</ol>
+<hr>
+<p>如果我们将电池的正极连接到二极管的p型侧，而负极将连接到n型侧，则我们正在降低势垒电压，从而促进电荷载流子在结上的扩散。<br>但是，在我们克服势垒电压并完全耗尽耗尽区之前，电流量将保持相当低的水平。如下左图，因为耗尽区仍然存在，所以电流还不能放飞自我。<br><img width src="https://pic4.zhimg.com/80/v2-a244fa18c0ce15cad73ac502863b9a73_720w.webp"></p>
+<p>当我们的外电压等于势垒电压时，当然是在正向偏置条件下，电流开始自由流过二极管。</p>
+<blockquote>
+<p>电子：哎呀呀，我走啦</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>这时我们知道了，PN结的单向导电性。另外它还有电容性，当然是在反向偏置时，而且反向电压越大，电容越小。</p>
+</blockquote>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><ul>
+<li><p>当以反向偏压极性施加电压时，pn结阻止电流流动，而当以正偏压极性施加电压时，pn结允许电流流动。 这就是为什么二极管可以用作电流的单向阀的原因。</p>
+</li>
+<li><p>其次，当施加的正向偏置电压接近势垒电压时，流过二极管的电流呈指数增长。 这种指数电压-电流关系使正向偏置二极管的电压降保持相当稳定。</p>
+</li>
+</ul>
+<h2 id="二极管特性"><a href="#二极管特性" class="headerlink" title="二极管特性"></a>二极管特性</h2><p>回顾一下我们上一节说到的物理量：</p>
+<ul>
+<li>壁垒电压，阻碍外电流。<br>它在正向偏置和反向偏置时都会出现。</li>
+</ul>
+<p>二极管的伏安特性曲线：<br><img src="/2022/11/10/EEE/picture/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-11-09%20195043.png"></p>
+<p>我们先分两个方向来看几个物理量：</p>
+<h4 id="正向偏置时二极管特性"><a href="#正向偏置时二极管特性" class="headerlink" title="正向偏置时二极管特性"></a>正向偏置时二极管特性</h4><p>当外电压没有超过壁垒电压时，二极管电流较低。</p>
+<ul>
+<li>静态电阻高，而动态电阻低。（没啥用的知识）</li>
+</ul>
+<p>当超过堡垒电压时，电流会迅速成指数上升。<br>我们将这电流明显增大时的电压，称为<strong>死区电压</strong></p>
+<p>当电压很大时，电流也很大。这时我们可以把二极管当作一个反向的电源，压降一般在一个范围内。我们将这时的压降称为正向压降。</p>
+<p>所以说，在正向偏置时，二极管对电流阻碍作用可以抽象为一个反向电压。</p>
+<h4 id="反向偏置时二极管特性。"><a href="#反向偏置时二极管特性。" class="headerlink" title="反向偏置时二极管特性。"></a>反向偏置时二极管特性。</h4><p>当反向偏置时，随着电压的增加，<strong>电流很弱。</strong><br>当PN结温度升高时，反向电流明显增加。为什么? <span class="hide-inline"><button type="button" class="hide-button" style>Click
+  </button><span class="hide-content">温度上升促进少子漂移</span></span></p>
+<p>当电压到达一定程度，二极管被反向击穿时，（这时耗尽区扩大到整个PN结），电流急速增加。此时电压的临界值为<strong>击穿电压</strong></p>
+<h3 id="二极管工作参数"><a href="#二极管工作参数" class="headerlink" title="二极管工作参数"></a>二极管工作参数</h3><details class="toggle"><summary class="toggle-button" style>对普通二极管工作时，我们关注的参数：</summary><div class="toggle-content"><ol>
+<li>直流电阻Ro：静态工作点处的直流电压和直流电流的比值。  <img width src="https://img-blog.csdnimg.cn/20201105095036284.jpg#pic_center"></li>
+<li>交流电阻rd：二极管在静态工作点处电压的微变增量与相应的电流微变增量的比值。<img width src="https://img-blog.csdnimg.cn/20201105095522427.png#pic_center"></li>
+<li>最大反向工作电压UR：二极管反偏电流过大可能会发生反向击穿，UR指使用时加在二极管上的最大反向电压，即UR在数值上应小于反向击穿电压BUR</li>
+<li>反向电流IR：IR就是反向饱和电流IS</li>
+<li>最高工作频率fM：允许加在二极管上的最大交流电压频率。若交流电压频率超过此值，二极管的单向导通性将变差（势类电容的影响）。</li>
+</ol>
+</div></details>
+
+
+<p>二极管正常工作的场景：<br>和高中电灯泡题目一样的图解法就不多说了。<br><img src="/2022/11/10/EEE/picture/2.png"></p>
+<h4 id="静态电阻和动态电阻"><a href="#静态电阻和动态电阻" class="headerlink" title="静态电阻和动态电阻"></a>静态电阻和动态电阻</h4><p>可能上课时，老师讲的不是很清楚。因为这东西确实对我们专业没啥用，<em>目前我认为应该可能</em>。<del>求生欲拉满</del></p>
+<p>半导体二极管是一种非线性器件，它对直流和交流(或者说动态量)呈现出不同的等效电阻。</p>
+<p>在直流电源V的作用下，对应于二极管电流ID和二极管两端电压UD的点称为静态工作点，该点对应的静态电阻为<br>$$ R_D &#x3D;\frac{U_D}{I_D} $$</p>
+<p>动态电阻是在一个固定的直流电压和电流(即静态工作点Q)的基础上，由交流信号ui引起特性曲线在Q点附近的一小段电压和电流的变化产生的。若该交流信号ui是低频，而且幅度很小(通常称低频小信号)，则由此引起的电流变化量也很小，这一小段特性曲线可以用通过Q点的切线来等效，<br><img src="https://www.elecfans.com/uploads/allimg/171103/162003M18-2.jpg"><br>二极管两端产生的电压变化量和电流变化量如图(b)中所标注，则此时的二极管可等效成一个动态电阻rd。<br>定义公式为：<br>$$ r_D&#x3D;\frac{du_D}{di_D} $$</p>
+<p>接下来推一下PPT上的一个公式，<strong>公式很重要</strong><br><img width src="/2022/11/10/EEE/picture/3.png"></p>
+<p>$U_T,I_S $ 是反向饱和时的电压和饱和电流。我觉得应该是用这两个东西拟合的电流曲线<br><img src="/2022/11/10/EEE/picture/%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC1.jpg"><br>$U_T$ 一般等于26mV，$I_D$为直流电流大小</p>
+<hr>
+<p>分析电路就不在这里说了，我觉得挺简单的。</p>
+<h3 id="稳压管工作"><a href="#稳压管工作" class="headerlink" title="稳压管工作"></a>稳压管工作</h3><p>稳压管是一种特殊的面接触型半导体二极管<br>1)反向特性曲线比较陡<br>2)工作在反向击穿区</p>
+<p><img src="https://www.dgxue.com/wp-content/uploads/2016/05/img003-1.jpg"><br><img src="/2022/11/10/EEE/picture/4.png"></p>
+<p>对于稳压管的分析，感觉和高中电路动态分析差不多。</p>
+<ul>
+<li>当$R_L$两端电压大于稳压管击穿电压时，稳压管能起一个负反馈的作用。当然这个过程少不了在干路上的R的参与</li>
+<li>当$R_L$两端电压小于反向击穿电压时，就可以近似认为，稳压管反向偏置，<strong>断路</strong></li>
+</ul>
+<p>需要注意的是，当稳压二极管处于反向击穿状态时，细微的电压变动都会引起电流很大的变化，而稳压二极管都有自己的最大工作电$I_{zm}$流，如果超过这个值，稳压二极管就会烧坏,失去稳压能力，所以在实际中一定要防止稳压二极管电流超过最大工作电$I_{zm}$流（可以通过加大R1进行限流）。此时的电流$I_z$为：<br><img src="https://img-blog.csdnimg.cn/20201104204410678.png#pic_center"></p>
+<h2 id="二极管应用"><a href="#二极管应用" class="headerlink" title="二极管应用"></a>二极管应用</h2><p>二极管有很多应用,我作为初学者以及专业门外汉，只是总结一下我们学到的几个电路。</p>
+<ul>
+<li>单向整流，桥式整流</li>
+<li>电容滤波</li>
+<li>稳压电路</li>
+</ul>
+<blockquote>
+<p>许多初学者对二极管很“熟悉”，提起二极管的特性可以脱口而出它的单向导电特性，说到它在电路中的应用第一反应是整流，对二极管的其他特性和应用了解不多，认识上也认为掌握了二极管的单向导电特性，就能分析二极管参与的各种电路，实际上这样的想法是错误的，而且在某种程度上是害了自己，因为这种定向思维影响了对各种二极管电路工作原理的分析，许多二极管电路无法用单向导电特性来解释其工作原理。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://donkeyeee.github.io">驴哲君</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://donkeyeee.github.io/2022/11/10/EEE/">https://donkeyeee.github.io/2022/11/10/EEE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://donkeyeee.github.io" target="_blank">驴哲的摸鱼time</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%94%B5%E5%B7%A5%E5%AD%A6/">电工学</a></div><div class="post_share"><div class="social-share" data-image="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&amp;h=255&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/11/06/%E8%AF%BE%E5%86%85%E7%AC%94%E8%AE%B0%E9%9B%86/"><img class="next-cover" src="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&amp;h=255&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">课内笔记集</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/Avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">驴哲君</div><div class="author-info__description">在荒诞的世界中做自己的英雄</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%B5%E5%B7%A5%E5%AD%A6%E4%B9%8B%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">电工学之二极管笔记整理。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.1.</span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PN%E7%BB%93%E5%92%8C%E4%BA%8C%E6%9E%81%E7%AE%A1"><span class="toc-number">1.2.</span> <span class="toc-text">PN结和二极管</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PN%E7%BB%93%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.1.</span> <span class="toc-text">PN结的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PN%E7%BB%93%E4%B8%8E%E7%94%B5%E5%8E%8B"><span class="toc-number">1.2.2.</span> <span class="toc-text">PN结与电压</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E5%81%8F%E7%BD%AE"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">反向偏置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">1.2.3.</span> <span class="toc-text">总结：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%89%B9%E6%80%A7"><span class="toc-number">1.3.</span> <span class="toc-text">二极管特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E5%81%8F%E7%BD%AE%E6%97%B6%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%89%B9%E6%80%A7"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">正向偏置时二极管特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E5%81%8F%E7%BD%AE%E6%97%B6%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%89%B9%E6%80%A7%E3%80%82"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">反向偏置时二极管特性。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%9E%81%E7%AE%A1%E5%B7%A5%E4%BD%9C%E5%8F%82%E6%95%B0"><span class="toc-number">1.3.1.</span> <span class="toc-text">二极管工作参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%94%B5%E9%98%BB%E5%92%8C%E5%8A%A8%E6%80%81%E7%94%B5%E9%98%BB"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">静态电阻和动态电阻</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%B3%E5%8E%8B%E7%AE%A1%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.3.2.</span> <span class="toc-text">稳压管工作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E6%9E%81%E7%AE%A1%E5%BA%94%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">二极管应用</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/11/10/EEE/" title="EEE——二极管"><img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&amp;h=255&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EEE——二极管"/></a><div class="content"><a class="title" href="/2022/11/10/EEE/" title="EEE——二极管">EEE——二极管</a><time datetime="2022-11-10T11:40:19.000Z" title="发表于 2022-11-10 19:40:19">2022-11-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/06/%E8%AF%BE%E5%86%85%E7%AC%94%E8%AE%B0%E9%9B%86/" title="课内笔记集"><img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&amp;h=255&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="课内笔记集"/></a><div class="content"><a class="title" href="/2022/11/06/%E8%AF%BE%E5%86%85%E7%AC%94%E8%AE%B0%E9%9B%86/" title="课内笔记集">课内笔记集</a><time datetime="2022-11-06T14:39:02.000Z" title="发表于 2022-11-06 22:39:02">2022-11-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/06/plotly-express%E9%80%A0%E8%BD%AE%E5%AD%90%E4%B9%8B-%E7%BB%98%E5%88%B6%E7%AE%80%E5%8D%95%E5%87%BD%E6%95%B0/" title="plotly_express造轮子之---绘制简单函数"><img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&amp;h=255&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="plotly_express造轮子之---绘制简单函数"/></a><div class="content"><a class="title" href="/2022/11/06/plotly-express%E9%80%A0%E8%BD%AE%E5%AD%90%E4%B9%8B-%E7%BB%98%E5%88%B6%E7%AE%80%E5%8D%95%E5%87%BD%E6%95%B0/" title="plotly_express造轮子之---绘制简单函数">plotly_express造轮子之---绘制简单函数</a><time datetime="2022-11-05T16:03:09.000Z" title="发表于 2022-11-06 00:03:09">2022-11-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/04/AI-study%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="AI_study学习笔记"><img src="http://img9.vilipix.com/picture/periodical/2022/06/12/06/00/78424323_p0_master1200.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI_study学习笔记"/></a><div class="content"><a class="title" href="/2022/11/04/AI-study%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="AI_study学习笔记">AI_study学习笔记</a><time datetime="2022-11-04T14:50:00.000Z" title="发表于 2022-11-04 22:50:00">2022-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/04/dairy-11-4/" title="dairy_11_4"><img src="https://img9.vilipix.com/picture/pages/regular/2022/08/31/12/101123738_p0_master1200.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="dairy_11_4"/></a><div class="content"><a class="title" href="/2022/11/04/dairy-11-4/" title="dairy_11_4">dairy_11_4</a><time datetime="2022-11-04T06:38:32.000Z" title="发表于 2022-11-04 14:38:32">2022-11-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 驴哲君</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div>null<script type="text/javascript" src="/js/cursor.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-koharu"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
