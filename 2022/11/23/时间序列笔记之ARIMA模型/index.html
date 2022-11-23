@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>时间序列笔记之ARIMA模型 | 驴哲的摸鱼time</title><meta name="author" content="驴哲君"><meta name="copyright" content="驴哲君"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="想学学时间序列的知识，之前了解过和卷积网络有关的LSTM。其实应该先学ARIMA的，更基础一点，所以说现在来补一下基础。之后再做一点LSTM的笔记。 ARIMA 学习笔记我想先找一些基础资料，再结合我在kaggle上找到的一篇实战，来完成这次的笔记B站上也有教程，我听了后，觉得还是自己直接过一遍来的清晰。 参考资料：ARIMA时间序列模型Python实现时间序列ARIMA模型利用SARIMAX进行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="时间序列笔记之ARIMA模型">
+<meta property="og:url" content="https://donkeyeee.github.io/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="驴哲的摸鱼time">
+<meta property="og:description" content="想学学时间序列的知识，之前了解过和卷积网络有关的LSTM。其实应该先学ARIMA的，更基础一点，所以说现在来补一下基础。之后再做一点LSTM的笔记。 ARIMA 学习笔记我想先找一些基础资料，再结合我在kaggle上找到的一篇实战，来完成这次的笔记B站上也有教程，我听了后，觉得还是自己直接过一遍来的清晰。 参考资料：ARIMA时间序列模型Python实现时间序列ARIMA模型利用SARIMAX进行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img9.vilipix.com/picture/pages/regular/2022/08/31/13/101566267_p0_master1200.jpg">
+<meta property="article:published_time" content="2022-11-23T05:46:12.000Z">
+<meta property="article:modified_time" content="2022-11-23T07:43:08.583Z">
+<meta property="article:author" content="驴哲君">
+<meta property="article:tag" content="时间序列">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img9.vilipix.com/picture/pages/regular/2022/08/31/13/101566267_p0_master1200.jpg"><link rel="shortcut icon" href="/img/favicon.svg"><link rel="canonical" href="https://donkeyeee.github.io/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '时间序列笔记之ARIMA模型',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-23 15:43:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet"  href="/css/bkgd_img.css"><link rel="stylesheet"  href="/css/post_bkgd.css"><link rel="stylesheet"  href="/css/custom.css"><link rel="stylesheet"  href="/css/mouse.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/Avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/myself"><i class="fa-fw /myself/"></i><span> 1</span></a></li><li><a class="site-page child" href="/butterfly"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 2</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img9.vilipix.com/picture/pages/regular/2022/08/31/13/101566267_p0_master1200.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">驴哲的摸鱼time</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/myself"><i class="fa-fw /myself/"></i><span> 1</span></a></li><li><a class="site-page child" href="/butterfly"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 2</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">时间序列笔记之ARIMA模型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-23T05:46:12.000Z" title="发表于 2022-11-23 13:46:12">2022-11-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-23T07:43:08.583Z" title="更新于 2022-11-23 15:43:08">2022-11-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="时间序列笔记之ARIMA模型"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>想学学时间序列的知识，之前了解过和卷积网络有关的LSTM。<br>其实应该先学ARIMA的，更基础一点，所以说现在来补一下基础。<br>之后再做一点LSTM的笔记。</p>
+<h1 id="ARIMA-学习笔记"><a href="#ARIMA-学习笔记" class="headerlink" title="ARIMA 学习笔记"></a>ARIMA 学习笔记</h1><p>我想先找一些基础资料，再结合我在kaggle上找到的一篇实战，来完成这次的笔记<br>B站上也有教程，我听了后，觉得还是自己直接过一遍来的清晰。</p>
+<p>参考资料：<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9a05472b0e7d">ARIMA时间序列模型</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46599926/article/details/123524478">Python实现时间序列ARIMA模型</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/fitzgerald0/article/details/100823231">利用SARIMAX进行销量预测</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/430514606">偏自相关系数PACF（公式篇）</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41988628/article/details/83149849">机器学习（五）——时间序列ARIMA模型</a></p>
+<h1 id="差分自回归移动平均模型的基本原理"><a href="#差分自回归移动平均模型的基本原理" class="headerlink" title="差分自回归移动平均模型的基本原理"></a>差分自回归移动平均模型的基本原理</h1><p>ARIMA(p,d,q) 称为差分自回归移动平均模型，根据原序列是否平稳以及回归中所含部分的不同，包括移动平均过程(MA)、自回归过程(AR)、自回归移动平均过程(ARMA)和自回归滑动平均混合过程(ARIMA)</p>
+<blockquote>
+<p>AR是自回归，p为自回归项；MA为移动平均，q为移动平均项数，d为时间序列变为平稳时间序列时所做的差分次数。</p>
+</blockquote>
+<p>ARIMA模型的基本思想是：将预测对象随时间推移而形成的数据序列视为一个随机序列，用一定的数学模型来近似描述这个序列。这个模型一旦被识别后就可以从时间序列的过去值及现在值来预测未来值。</p>
+<h2 id="自回归模型（AR）"><a href="#自回归模型（AR）" class="headerlink" title="自回归模型（AR）"></a>自回归模型（AR）</h2><p>描述当前值与历史值之间的关系，用变量自身的历史数据对自身进行预测</p>
+<ul>
+<li>用变量自身的历史时间数据对自身进行预测</li>
+<li>自回归模型必须满足平稳性要求</li>
+<li>根据历史值回归当前值</li>
+<li>p阶：使用前p天数据进行预测</li>
+</ul>
+<p>$$ y_t &#x3D; \mu + \sum^{p}_{i&#x3D;1} \gamma _i y_{t-i} + \epsilon _t $$</p>
+<p><strong>限制：</strong></p>
+<ul>
+<li>自回归模型是用自身数据进行预测</li>
+<li>必须有<strong>平稳性</strong></li>
+<li>必须有自相关性</li>
+<li>只使用与预测自身前期相关的数据，</li>
+</ul>
+<h3 id="平稳性"><a href="#平稳性" class="headerlink" title="平稳性"></a>平稳性</h3><p>从统计学的角度来看，平稳性是指数据的分布在时间上平移时不发生变化。要求经由样本时间序列所得到的拟合曲线在未来的一段期间内仍能顺着现有的形态“惯性”地延续下去。因此，非平稳数据显示了由于趋势而产生的波动，必须对其进行转换才能进行分析。</p>
+<p>平稳性要求序列的均值和方差不发生明显变化</p>
+<p>严平稳与弱平稳：</p>
+<ul>
+<li>严平稳：严平稳表示的分布不随时间的改变而改变<ul>
+<li>如：白噪音（正态）无论怎么取都是期望为0，方差为一</li>
+</ul>
+</li>
+<li>弱平稳：期望与相关系数不变 <ul>
+<li>(大部分情况)未来某时刻的t 的值$X_t$就要依赖于它过去的信息，所以需要依赖性</li>
+</ul>
+</li>
+</ul>
+<h2 id="移动平均模型-MA"><a href="#移动平均模型-MA" class="headerlink" title="移动平均模型(MA)"></a>移动平均模型(MA)</h2><p>移动平均模型关注的是自回归模型中的误差项的累加</p>
+<p>移动平均法能有效地消除预测中的随机波动 (使误差越均衡越好)</p>
+<p>$$ y_t &#x3D; \mu + \epsilon _t + \sum ^{q} _{i&#x3D;1} \theta _i \epsilon _{t-i}  $$</p>
+<hr>
+<h1 id="模型参数选择方法"><a href="#模型参数选择方法" class="headerlink" title="模型参数选择方法"></a>模型参数选择方法</h1><p>建立模型的前期， 需要确定阶数，例如AR(P)模型的参数P。</p>
+<p>这时就需要根据时间序列的ACF和PACF函数值来确定， 然后建立模型， 最后需要检验模型的效果。</p>
+<h2 id="ACF自相关系数"><a href="#ACF自相关系数" class="headerlink" title="ACF自相关系数"></a>ACF自相关系数</h2><p>ACF自相关系数</p>
+<p>有序的随机变量序列与其自身相比较<br>自相关函数反映了同一序列在不同时序的取值的相关性<br>当相关系数为1时为正相关，为-1时为负相关，0为没有关系</p>
+<p><img src="https://img-blog.csdnimg.cn/380eef7ac42d40e699824bab549fdda8.png"></p>
+<p>公式解释：</p>
+<ul>
+<li><strong>变量与自身的变化:$y_t 到 y_{t-k} $的相关系数</strong></li>
+<li>k阶滞后点</li>
+<li>ACF取值[-1,1]</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/b5687bc0d3644353b8a6d6cbb23eba98.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA576K576K54yq,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<blockquote>
+<p>横轴为阶数，纵轴为ACF的值。虚线表示95%置信区间。<br>这里Lag&#x3D;20, 则最大为20阶。不同阶代表滞后不同的点。看同一序列在不同阶的时候的相关性如何。<br>这里2阶的时候约为-0.35，则与自身为负相关，相关系数约为0.35</p>
+</blockquote>
+<h2 id="PACF偏自相关系数函数"><a href="#PACF偏自相关系数函数" class="headerlink" title="PACF偏自相关系数函数"></a>PACF偏自相关系数函数</h2><p>PAC（Partical Autocorrelation Coefficient 偏自相关系数）：同自相关系数大同小异，在计算相关性时移除了中间变量的间接影响。</p>
+<p>PACF（Partial Autocorrelation Function偏自相关函数）：偏自相关系数构成的序列</p>
+<img widyh src="https://pic4.zhimg.com/80/v2-b8e36d19876024875953140598a541d7_720w.webp">
+
+
+<p>对于时间序列${X_t}$ :</p>
+<ul>
+<li>有些序列中存在短期相关性，如平稳时间序列</li>
+<li>$X_{t-k} 通过影响中间的元素间接影响了X_t$</li>
+<li>PAC偏自相关系数就是用来求解$X_{t-k}$对$X_t$的简单直接影响。</li>
+</ul>
+<p>求解的数学方法在<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/430514606">偏自相关系数PACF（公式篇）</a>中有详细描述。并且</p>
+<blockquote>
+<p>总的来说ACF包含了其他变量的影响<br>而偏自相关系数PACF是严格这两个变量之间的相关性</p>
+</blockquote>
+<h2 id="使用ACF和PACF图对模型进行定阶"><a href="#使用ACF和PACF图对模型进行定阶" class="headerlink" title="使用ACF和PACF图对模型进行定阶"></a>使用ACF和PACF图对模型进行定阶</h2><p>根据ACF和PACF图肉眼观察</p>
+<p><strong>拖尾和结尾</strong>：</p>
+<ul>
+<li>拖尾：始终有非零取值，不会在大于某阶后就快速趋近于0（而是在0附近波动），可简单理解为无论如何都不会为0，而是在某阶之后在0附近随机变化。</li>
+<li>截尾： 在大于某阶(k)后快速趋于0为k阶截尾，可简单理解为从某阶之后直接就变为0。截尾:落在置信区间内( 95%的点都符合该规则)</li>
+</ul>
+<h3 id="判断方法："><a href="#判断方法：" class="headerlink" title="判断方法："></a>判断方法：</h3><p><img src="/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B/ACF.png"></p>
+<p><img src="/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-11-23%20154247.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://donkeyeee.github.io">驴哲君</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://donkeyeee.github.io/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B/">https://donkeyeee.github.io/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://donkeyeee.github.io" target="_blank">驴哲的摸鱼time</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/">时间序列</a></div><div class="post_share"><div class="social-share" data-image="https://img9.vilipix.com/picture/pages/regular/2022/08/31/13/101566267_p0_master1200.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/11/22/EEE%E4%B9%8B%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E5%BA%94%E7%94%A8/"><img class="next-cover" src="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&amp;h=255&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">EEE之二极管的应用</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/Avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">驴哲君</div><div class="author-info__description">在荒诞的世界中做自己的英雄</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ARIMA-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">ARIMA 学习笔记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%AE%E5%88%86%E8%87%AA%E5%9B%9E%E5%BD%92%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">差分自回归移动平均模型的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B%EF%BC%88AR%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">自回归模型（AR）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E7%A8%B3%E6%80%A7"><span class="toc-number">2.1.1.</span> <span class="toc-text">平稳性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E6%A8%A1%E5%9E%8B-MA"><span class="toc-number">2.2.</span> <span class="toc-text">移动平均模型(MA)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">模型参数选择方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ACF%E8%87%AA%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">ACF自相关系数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PACF%E5%81%8F%E8%87%AA%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">PACF偏自相关系数函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8ACF%E5%92%8CPACF%E5%9B%BE%E5%AF%B9%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E5%AE%9A%E9%98%B6"><span class="toc-number">3.3.</span> <span class="toc-text">使用ACF和PACF图对模型进行定阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">3.3.1.</span> <span class="toc-text">判断方法：</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B/" title="时间序列笔记之ARIMA模型"><img src="https://img9.vilipix.com/picture/pages/regular/2022/08/31/13/101566267_p0_master1200.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="时间序列笔记之ARIMA模型"/></a><div class="content"><a class="title" href="/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B/" title="时间序列笔记之ARIMA模型">时间序列笔记之ARIMA模型</a><time datetime="2022-11-23T05:46:12.000Z" title="发表于 2022-11-23 13:46:12">2022-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/22/EEE%E4%B9%8B%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E5%BA%94%E7%94%A8/" title="EEE之二极管的应用"><img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&amp;h=255&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EEE之二极管的应用"/></a><div class="content"><a class="title" href="/2022/11/22/EEE%E4%B9%8B%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E5%BA%94%E7%94%A8/" title="EEE之二极管的应用">EEE之二极管的应用</a><time datetime="2022-11-22T02:28:19.000Z" title="发表于 2022-11-22 10:28:19">2022-11-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/19/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="随机森林学习笔记"><img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&amp;h=113&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="随机森林学习笔记"/></a><div class="content"><a class="title" href="/2022/11/19/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="随机森林学习笔记">随机森林学习笔记</a><time datetime="2022-11-19T07:05:38.000Z" title="发表于 2022-11-19 15:05:38">2022-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/18/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E9%9B%861/" title="论文阅读笔记集1"><img src="https://img9.vilipix.com/picture/pages/regular/2022/08/31/12/101123738_p0_master1200.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="论文阅读笔记集1"/></a><div class="content"><a class="title" href="/2022/11/18/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E9%9B%861/" title="论文阅读笔记集1">论文阅读笔记集1</a><time datetime="2022-11-18T15:45:48.000Z" title="发表于 2022-11-18 23:45:48">2022-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/17/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E4%B9%8B%E7%81%B0%E8%89%B2%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="数学建模之灰色预测模型学习笔记"><img src="https://img9.vilipix.com/picture/pages/regular/2022/08/31/12/101123738_p0_master1200.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数学建模之灰色预测模型学习笔记"/></a><div class="content"><a class="title" href="/2022/11/17/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E4%B9%8B%E7%81%B0%E8%89%B2%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="数学建模之灰色预测模型学习笔记">数学建模之灰色预测模型学习笔记</a><time datetime="2022-11-16T16:04:22.000Z" title="发表于 2022-11-17 00:04:22">2022-11-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 驴哲君</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script type="text/javascript" src="/js/cursor.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
