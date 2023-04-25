@@ -1,0 +1,435 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>驴哲的摸鱼time | 驴哲的摸鱼time</title><meta name="author" content="驴哲君"><meta name="copyright" content="驴哲君"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="ARIMA实战最近了解到了一个时间序列的预测方式 差分自回归平均模型，机理了解了大概，还没有看细致的推理 但是为了准备以后急用的话，还是先学一下这个。 参考资料Bitcoin Price. Prediction by ARIMA 实战123456789101112131415# Import librariesimport numpy as npimport pandas as pdimport">
+<meta property="og:type" content="article">
+<meta property="og:title" content="驴哲的摸鱼time">
+<meta property="og:url" content="https://donkeyeee.github.io/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/index.html">
+<meta property="og:site_name" content="驴哲的摸鱼time">
+<meta property="og:description" content="ARIMA实战最近了解到了一个时间序列的预测方式 差分自回归平均模型，机理了解了大概，还没有看细致的推理 但是为了准备以后急用的话，还是先学一下这个。 参考资料Bitcoin Price. Prediction by ARIMA 实战123456789101112131415# Import librariesimport numpy as npimport pandas as pdimport">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&h=113&c=7&r=0&o=5&dpr=1.4&pid=1.7">
+<meta property="article:published_time" content="2022-11-23T10:54:46.951Z">
+<meta property="article:modified_time" content="2022-11-23T10:56:50.577Z">
+<meta property="article:author" content="驴哲君">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&h=113&c=7&r=0&o=5&dpr=1.4&pid=1.7"><link rel="shortcut icon" href="/img/favicon.svg"><link rel="canonical" href="https://donkeyeee.github.io/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '驴哲的摸鱼time',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-23 18:56:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet"  href="/css/bkgd_img.css"><link rel="stylesheet"  href="/css/post_bkgd.css"><link rel="stylesheet"  href="/css/custom.css"><link rel="stylesheet"  href="/css/mouse.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/Avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/myself"><i class="fa-fw /myself/"></i><span> 1</span></a></li><li><a class="site-page child" href="/butterfly"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 2</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&amp;h=113&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">驴哲的摸鱼time</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/myself"><i class="fa-fw /myself/"></i><span> 1</span></a></li><li><a class="site-page child" href="/butterfly"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 2</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-23T10:54:46.951Z" title="发表于 2022-11-23 18:54:46">2022-11-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-23T10:56:50.577Z" title="更新于 2022-11-23 18:56:50">2022-11-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ARIMA实战"><a href="#ARIMA实战" class="headerlink" title="ARIMA实战"></a>ARIMA实战</h1><p>最近了解到了一个时间序列的预测方式</p>
+<p>差分自回归平均模型，机理了解了大概，还没有看细致的推理</p>
+<p>但是为了准备以后急用的话，还是先学一下这个。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://www.kaggle.com/code/myonin/bitcoin-price-prediction-by-arima/notebook">Bitcoin Price. Prediction by ARIMA</a></p>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Import libraries</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib <span class="keyword">as</span> mpl</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> stats</span><br><span class="line"><span class="keyword">import</span> statsmodels.api <span class="keyword">as</span> sm</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> product</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">warnings.filterwarnings(<span class="string">&#x27;ignore&#x27;</span>)</span><br><span class="line">plt.style.use(<span class="string">&#x27;seaborn-poster&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Data-Exploration"><a href="#Data-Exploration" class="headerlink" title="Data Exploration"></a>Data Exploration</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load data</span></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;bitstampUSD_1-min_data_2012-01-01_to_2017-10-20.csv&#x27;</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th &#123;
+    vertical-align: top;
+&#125;
+
+.dataframe thead th &#123;
+    text-align: right;
+&#125;
+</code></pre>
+<p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Timestamp</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Volume_(BTC)</th>
+      <th>Volume_(Currency)</th>
+      <th>Weighted_Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1325317920</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>0.455581</td>
+      <td>2.0</td>
+      <td>4.39</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1325317980</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>0.455581</td>
+      <td>2.0</td>
+      <td>4.39</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1325318040</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>0.455581</td>
+      <td>2.0</td>
+      <td>4.39</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1325318100</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>0.455581</td>
+      <td>2.0</td>
+      <td>4.39</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1325318160</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>4.39</td>
+      <td>0.455581</td>
+      <td>2.0</td>
+      <td>4.39</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="数据重采样"><a href="#数据重采样" class="headerlink" title="数据重采样"></a>数据重采样</h3><ul>
+<li>转换时间序列的统计频率，将日–&gt;月–&gt;年</li>
+<li>降采样</li>
+<li>升采样</li>
+</ul>
+<p>pd.resample() 方法，传入转入频率 使用 .sum()或.mean</p>
+<p>“3D” 就是三天为一组</p>
+<p>升采样的话需要插值。</p>
+<p>插值方法：</p>
+<ul>
+<li>fill 空值取前面的值</li>
+<li>bfill 空值取后面的值</li>
+<li>interpolate 线性插值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Unix-time to </span></span><br><span class="line">df.Timestamp = pd.to_datetime(df.Timestamp, unit=<span class="string">&#x27;s&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Resampling to daily frequency</span></span><br><span class="line">df.index = df.Timestamp</span><br><span class="line">df = df.resample(<span class="string">&#x27;D&#x27;</span>).mean()  <span class="comment"># Pandas中的resample，重新采样，是对原样本重新处理的一个方法，是一个对常规时间序列数据重新采样和频率转换的便捷的方法。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Resampling to monthly frequency</span></span><br><span class="line">df_month = df.resample(<span class="string">&#x27;M&#x27;</span>).mean()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Resampling to annual frequency</span></span><br><span class="line">df_year = df.resample(<span class="string">&#x27;A-DEC&#x27;</span>).mean()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Resampling to quarterly frequency</span></span><br><span class="line">df_Q = df.resample(<span class="string">&#x27;Q-DEC&#x27;</span>).mean()</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h3><p>重采样后的时间序列</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># PLOTS</span></span><br><span class="line">fig = plt.figure(figsize=[<span class="number">15</span>, <span class="number">7</span>])</span><br><span class="line">plt.suptitle(<span class="string">&#x27;Bitcoin exchanges, mean USD&#x27;</span>, fontsize=<span class="number">22</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">221</span>)</span><br><span class="line">plt.plot(df.Weighted_Price, <span class="string">&#x27;-&#x27;</span>, label=<span class="string">&#x27;By Days&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">222</span>)</span><br><span class="line">plt.plot(df_month.Weighted_Price, <span class="string">&#x27;-&#x27;</span>, label=<span class="string">&#x27;By Months&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">223</span>)</span><br><span class="line">plt.plot(df_Q.Weighted_Price, <span class="string">&#x27;-&#x27;</span>, label=<span class="string">&#x27;By Quarters&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">224</span>)</span><br><span class="line">plt.plot(df_year.Weighted_Price, <span class="string">&#x27;-&#x27;</span>, label=<span class="string">&#x27;By Years&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line"><span class="comment"># plt.tight_layout()</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/output_9_0.png" alt="png"></p>
+<p>接下来将以月为单位预测价格</p>
+<h2 id="序列的静态性检查和STL分解"><a href="#序列的静态性检查和STL分解" class="headerlink" title="序列的静态性检查和STL分解"></a>序列的静态性检查和STL分解</h2><p>Stationarity check and STL-decomposition of the series</p>
+<p>sm.tsa.seasonal_decompose()使用滑动平均的方法进行时间序列分解</p>
+<p>注：这只是一个最为简单的分解方法</p>
+<p>通过首先通过对数据应用卷积滤波器估计趋势来获得结果。 然后从序列中删除趋势，每个时期的去趋势序列的平均值是返回的季节性分量。</p>
+<p>时间序列可以分解为三种成分：水平部分（平均值），趋势部分（上升或下降），季节性部分（周期性的重复），剩余的就是随机变动，即前三者都没法解释的“杂音”。我们常见的时间序列，根据复杂度的不同，一般上述三种成分中的一种、两种或三种组合而成。当然，你也可以把水平部分当成趋势的特例，或者趋势的一部分。那么，时间序列就可简化为两部分：趋势和季节性，以及两者之外的随机变动</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=[<span class="number">15</span>,<span class="number">7</span>])</span><br><span class="line"></span><br><span class="line">sm.tsa.seasonal_decompose(df_month.Weighted_Price).plot()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Dickey–Fuller test: p=%f&quot;</span> % sm.tsa.stattools.adfuller(df_month.Weighted_Price)[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>Dickey–Fuller test: p=1.000000
+
+
+
+&lt;Figure size 1080x504 with 0 Axes&gt;
+</code></pre>
+<p><img src="/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/output_12_2.png" alt="png"></p>
+<h2 id="Box-Cox-Transformations"><a href="#Box-Cox-Transformations" class="headerlink" title="Box-Cox Transformations"></a>Box-Cox Transformations</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Box-Cox Transformations</span></span><br><span class="line">df_month[<span class="string">&#x27;Weighted_Price_box&#x27;</span>], lmbda = stats.boxcox(df_month.Weighted_Price)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Dickey–Fuller test: p=%f&quot;</span> % sm.tsa.stattools.adfuller(df_month.Weighted_Price)[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<pre><code>Dickey–Fuller test: p=1.000000
+</code></pre>
+<h2 id="季节性差异"><a href="#季节性差异" class="headerlink" title="季节性差异"></a>季节性差异</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Seasonal differentiation</span></span><br><span class="line">df_month[<span class="string">&#x27;prices_box_diff&#x27;</span>] = df_month.Weighted_Price_box - df_month.Weighted_Price_box.shift(<span class="number">12</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Dickey–Fuller test: p=%f&quot;</span> % sm.tsa.stattools.adfuller(df_month.prices_box_diff[<span class="number">12</span>:])[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<pre><code>Dickey–Fuller test: p=0.166401
+</code></pre>
+<h2 id="常规微分"><a href="#常规微分" class="headerlink" title="常规微分"></a>常规微分</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Regular differentiation</span></span><br><span class="line">df_month[<span class="string">&#x27;prices_box_diff2&#x27;</span>] = df_month.prices_box_diff - df_month.prices_box_diff.shift(<span class="number">1</span>)</span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">7</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># STL-decomposition</span></span><br><span class="line">sm.tsa.seasonal_decompose(df_month.prices_box_diff2[<span class="number">13</span>:]).plot()   </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Dickey–Fuller test: p=%f&quot;</span> % sm.tsa.stattools.adfuller(df_month.prices_box_diff2[<span class="number">13</span>:])[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>Dickey–Fuller test: p=0.024551
+
+
+
+&lt;Figure size 1080x504 with 0 Axes&gt;
+</code></pre>
+<p><img src="/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/output_18_2.png" alt="png"></p>
+<h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用自相关图和偏自相关图对参数进行初始近似</span></span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">7</span>))</span><br><span class="line">ax = plt.subplot(<span class="number">211</span>)</span><br><span class="line">sm.graphics.tsa.plot_acf(df_month.prices_box_diff2[<span class="number">13</span>:].values.squeeze(), lags=<span class="number">48</span>, ax=ax)</span><br><span class="line"></span><br><span class="line">ax = plt.subplot(<span class="number">212</span>)</span><br><span class="line">sm.graphics.tsa.plot_pacf(df_month.prices_box_diff2[<span class="number">13</span>:].values.squeeze(), lags=<span class="number">28</span>, ax=ax)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/output_20_0.png" alt="png"></p>
+<h2 id="参数的初始近似"><a href="#参数的初始近似" class="headerlink" title="参数的初始近似"></a>参数的初始近似</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initial approximation of parameters</span></span><br><span class="line">Qs = <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">qs = <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line">Ps = <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line">ps = <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line">D=<span class="number">1</span></span><br><span class="line">d=<span class="number">1</span></span><br><span class="line">parameters = product(ps, qs, Ps, Qs)</span><br><span class="line">parameters_list = <span class="built_in">list</span>(parameters)</span><br><span class="line"><span class="built_in">len</span>(parameters_list)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model Selection</span></span><br><span class="line">results = []</span><br><span class="line"></span><br><span class="line">best_aic = <span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>)</span><br><span class="line">warnings.filterwarnings(<span class="string">&#x27;ignore&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> parameters_list:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        model=sm.tsa.statespace.SARIMAX(df_month.Weighted_Price_box, order=(param[<span class="number">0</span>], d, param[<span class="number">1</span>]), </span><br><span class="line">                                        seasonal_order=(param[<span class="number">2</span>], D, param[<span class="number">3</span>], <span class="number">12</span>)).fit(disp=-<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">except</span> ValueError:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;wrong parameters:&#x27;</span>, param)</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    aic = model.aic</span><br><span class="line">    <span class="keyword">if</span> aic &lt; best_aic:</span><br><span class="line">        best_model = model</span><br><span class="line">        best_aic = aic</span><br><span class="line">        best_param = param</span><br><span class="line">    results.append([param, model.aic])</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Best Models</span></span><br><span class="line">result_table = pd.DataFrame(results)</span><br><span class="line">result_table.columns = [<span class="string">&#x27;parameters&#x27;</span>, <span class="string">&#x27;aic&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(result_table.sort_values(by = <span class="string">&#x27;aic&#x27;</span>, ascending=<span class="literal">True</span>).head())</span><br><span class="line"><span class="built_in">print</span>(best_model.summary())</span><br></pre></td></tr></table></figure>
+
+<pre><code>      parameters         aic
+49  (2, 2, 0, 1)  145.154162
+19  (1, 0, 0, 1)  146.056534
+21  (1, 0, 1, 1)  146.829670
+51  (2, 2, 1, 1)  147.106443
+50  (2, 2, 1, 0)  147.130255
+                                      SARIMAX Results                                       
+============================================================================================
+Dep. Variable:                   Weighted_Price_box   No. Observations:                   71
+Model:             SARIMAX(2, 1, 2)x(0, 1, [1], 12)   Log Likelihood                 -66.577
+Date:                              Sun, 20 Nov 2022   AIC                            145.154
+Time:                                      17:04:20   BIC                            157.517
+Sample:                                  12-31-2011   HQIC                           149.970
+                                       - 10-31-2017                                         
+Covariance Type:                                opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          1.1443      0.163      7.028      0.000       0.825       1.463
+ar.L2         -0.8387      0.136     -6.171      0.000      -1.105      -0.572
+ma.L1         -0.9756      0.787     -1.239      0.215      -2.519       0.568
+ma.L2          0.9871      1.515      0.651      0.515      -1.983       3.957
+ma.S.L12      -0.9920     18.410     -0.054      0.957     -37.075      35.091
+sigma2         0.3565      6.159      0.058      0.954     -11.714      12.428
+===================================================================================
+Ljung-Box (L1) (Q):                   0.57   Jarque-Bera (JB):                 5.84
+Prob(Q):                              0.45   Prob(JB):                         0.05
+Heteroskedasticity (H):               1.10   Skew:                             0.67
+Prob(H) (two-sided):                  0.84   Kurtosis:                         3.78
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Analysis of residues</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># STL-decomposition</span></span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">7</span>))</span><br><span class="line">plt.subplot(<span class="number">211</span>)</span><br><span class="line">best_model.resid[<span class="number">13</span>:].plot()</span><br><span class="line">plt.ylabel(<span class="string">u&#x27;Residuals&#x27;</span>)</span><br><span class="line">ax = plt.subplot(<span class="number">212</span>)</span><br><span class="line">sm.graphics.tsa.plot_acf(best_model.resid[<span class="number">13</span>:].values.squeeze(), lags=<span class="number">48</span>, ax=ax)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Dickey–Fuller test:: p=%f&quot;</span> % sm.tsa.stattools.adfuller(best_model.resid[<span class="number">13</span>:])[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>Dickey–Fuller test:: p=0.000000
+</code></pre>
+<p><img src="/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/output_25_1.png" alt="png"></p>
+<h2 id="Prediction"><a href="#Prediction" class="headerlink" title="Prediction"></a>Prediction</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Inverse Box-Cox Transformation Function</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">invboxcox</span>(<span class="params">y,lmbda</span>):</span><br><span class="line">   <span class="keyword">if</span> lmbda == <span class="number">0</span>:</span><br><span class="line">      <span class="keyword">return</span>(np.exp(y))</span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span>(np.exp(np.log(lmbda*y+<span class="number">1</span>)/lmbda))</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Prediction</span></span><br><span class="line">df_month2 = df_month[[<span class="string">&#x27;Weighted_Price&#x27;</span>]]</span><br><span class="line">date_list = [datetime(<span class="number">2017</span>, <span class="number">6</span>, <span class="number">30</span>), datetime(<span class="number">2017</span>, <span class="number">7</span>, <span class="number">31</span>), datetime(<span class="number">2017</span>, <span class="number">8</span>, <span class="number">31</span>), datetime(<span class="number">2017</span>, <span class="number">9</span>, <span class="number">30</span>), </span><br><span class="line">             datetime(<span class="number">2017</span>, <span class="number">10</span>, <span class="number">31</span>), datetime(<span class="number">2017</span>, <span class="number">11</span>, <span class="number">30</span>), datetime(<span class="number">2017</span>, <span class="number">12</span>, <span class="number">31</span>), datetime(<span class="number">2018</span>, <span class="number">1</span>, <span class="number">31</span>),</span><br><span class="line">             datetime(<span class="number">2018</span>, <span class="number">1</span>, <span class="number">28</span>)]</span><br><span class="line">future = pd.DataFrame(index=date_list, columns= df_month.columns)</span><br><span class="line">df_month2 = pd.concat([df_month2, future])</span><br><span class="line">df_month2[<span class="string">&#x27;forecast&#x27;</span>] = invboxcox(best_model.predict(start=<span class="number">0</span>, end=<span class="number">75</span>), lmbda)</span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">7</span>))</span><br><span class="line">df_month2.Weighted_Price.plot()</span><br><span class="line">df_month2.forecast.plot(color=<span class="string">&#x27;r&#x27;</span>, ls=<span class="string">&#x27;--&#x27;</span>, label=<span class="string">&#x27;Predicted Weighted_Price&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.title(<span class="string">&#x27;Bitcoin exchanges, by months&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;mean USD&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/output_28_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://donkeyeee.github.io">驴哲君</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://donkeyeee.github.io/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/">https://donkeyeee.github.io/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://donkeyeee.github.io" target="_blank">驴哲的摸鱼time</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&amp;h=113&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/27/%E6%97%A5%E8%AE%B02023/"><img class="prev-cover" src="https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&amp;h=113&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B-kaggle%E5%AE%9E%E6%88%98/"><img class="next-cover" src="https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&amp;h=113&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">时间序列笔记之ARIMA模型_kaggle实战</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/Avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">驴哲君</div><div class="author-info__description">在荒诞的世界中做自己的英雄</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ARIMA%E5%AE%9E%E6%88%98"><span class="toc-number">1.</span> <span class="toc-text">ARIMA实战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.1.</span> <span class="toc-text">参考资料</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E6%88%98"><span class="toc-number">2.</span> <span class="toc-text">实战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Exploration"><span class="toc-number">2.1.</span> <span class="toc-text">Data Exploration</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%87%8D%E9%87%87%E6%A0%B7"><span class="toc-number">2.1.1.</span> <span class="toc-text">数据重采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">2.1.2.</span> <span class="toc-text">数据可视化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E7%9A%84%E9%9D%99%E6%80%81%E6%80%A7%E6%A3%80%E6%9F%A5%E5%92%8CSTL%E5%88%86%E8%A7%A3"><span class="toc-number">2.2.</span> <span class="toc-text">序列的静态性检查和STL分解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Box-Cox-Transformations"><span class="toc-number">2.3.</span> <span class="toc-text">Box-Cox Transformations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A3%E8%8A%82%E6%80%A7%E5%B7%AE%E5%BC%82"><span class="toc-number">2.4.</span> <span class="toc-text">季节性差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E5%BE%AE%E5%88%86"><span class="toc-number">2.5.</span> <span class="toc-text">常规微分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="toc-number">2.6.</span> <span class="toc-text">模型选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E7%9A%84%E5%88%9D%E5%A7%8B%E8%BF%91%E4%BC%BC"><span class="toc-number">2.7.</span> <span class="toc-text">参数的初始近似</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prediction"><span class="toc-number">2.8.</span> <span class="toc-text">Prediction</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/27/%E6%97%A5%E8%AE%B02023/" title="无题"><img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&amp;h=113&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2023/03/27/%E6%97%A5%E8%AE%B02023/" title="无题">无题</a><time datetime="2023-03-26T19:40:59.329Z" title="发表于 2023-03-27 03:40:59">2023-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/" title="无题"><img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&amp;h=113&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/11/23/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/Kaggle_%E5%AE%9E%E6%88%98_ARIMA/" title="无题">无题</a><time datetime="2022-11-23T10:54:46.951Z" title="发表于 2022-11-23 18:54:46">2022-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B-kaggle%E5%AE%9E%E6%88%98/" title="时间序列笔记之ARIMA模型_kaggle实战"><img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.L0A8JoSvxdmXnyHLyfsykQHaEp?w=180&amp;h=113&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="时间序列笔记之ARIMA模型_kaggle实战"/></a><div class="content"><a class="title" href="/2022/11/23/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%AC%94%E8%AE%B0%E4%B9%8BARIMA%E6%A8%A1%E5%9E%8B-kaggle%E5%AE%9E%E6%88%98/" title="时间序列笔记之ARIMA模型_kaggle实战">时间序列笔记之ARIMA模型_kaggle实战</a><time datetime="2022-11-23T10:38:50.000Z" title="发表于 2022-11-23 18:38:50">2022-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/20/dairy-11-20/" title="dairy_11_20"><img src="https://img9.vilipix.com/picture/pages/regular/2022/08/31/13/101566267_p0_master1200.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="dairy_11_20"/></a><div class="content"><a class="title" href="/2022/11/20/dairy-11-20/" title="dairy_11_20">dairy_11_20</a><time datetime="2022-11-19T19:08:38.000Z" title="发表于 2022-11-20 03:08:38">2022-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/19/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="随机森林学习笔记"><img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.OJhKtltKciltI21va0eDWgHaKe?w=180&amp;h=255&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.4&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="随机森林学习笔记"/></a><div class="content"><a class="title" href="/2022/11/19/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="随机森林学习笔记">随机森林学习笔记</a><time datetime="2022-11-19T07:05:38.000Z" title="发表于 2022-11-19 15:05:38">2022-11-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 驴哲君</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script type="text/javascript" src="/js/cursor.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
