@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>chemprop学习笔记 | 驴哲的摸鱼time</title><meta name="author" content="驴哲君"><meta name="copyright" content="驴哲君"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="这学期做了一个计算毒理学的项目，想使用图神经网络的方式来预测化合物的毒性。在一篇论文中学习到一种定向信息传递网络方法，我之前看过一两本图神经网络的书，于是想将这个方法作为进一步学习的契机。  Analyzing Learned Molecular Representations for Property Prediction  论文阅读笔记原文中提到了几个未解决的问题，包括：  学习的分子表示与指">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chemprop学习笔记">
+<meta property="og:url" content="https://donkeyeee.github.io/2023/07/01/chemprop%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="驴哲的摸鱼time">
+<meta property="og:description" content="这学期做了一个计算毒理学的项目，想使用图神经网络的方式来预测化合物的毒性。在一篇论文中学习到一种定向信息传递网络方法，我之前看过一两本图神经网络的书，于是想将这个方法作为进一步学习的契机。  Analyzing Learned Molecular Representations for Property Prediction  论文阅读笔记原文中提到了几个未解决的问题，包括：  学习的分子表示与指">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/chemprop/chemprop/blob/master/docs/source/_static/images/chemprop_logo.svg">
+<meta property="article:published_time" content="2023-07-01T11:00:54.000Z">
+<meta property="article:modified_time" content="2023-07-01T14:51:12.055Z">
+<meta property="article:author" content="驴哲君">
+<meta property="article:tag" content="计算毒理学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/chemprop/chemprop/blob/master/docs/source/_static/images/chemprop_logo.svg"><link rel="shortcut icon" href="/img/favicon.svg"><link rel="canonical" href="https://donkeyeee.github.io/2023/07/01/chemprop%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'chemprop学习笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-01 22:51:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/universe.css"><link rel="stylesheet"  href="/css/custom.css"><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/Avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://github.com/chemprop/chemprop/blob/master/docs/source/_static/images/chemprop_logo.svg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">驴哲的摸鱼time</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">chemprop学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-01T11:00:54.000Z" title="发表于 2023-07-01 19:00:54">2023-07-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-01T14:51:12.055Z" title="更新于 2023-07-01 22:51:12">2023-07-01</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="chemprop学习笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这学期做了一个计算毒理学的项目，想使用图神经网络的方式来预测化合物的毒性。在一篇论文中学习到一种定向信息传递网络方法，我之前看过一两本图神经网络的书，于是想将这个方法作为进一步学习的契机。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://pubs.acs.org/doi/10.1021/acs.jcim.9b00237">Analyzing Learned Molecular Representations for Property Prediction</a></p>
+</blockquote>
+<h1 id="论文阅读笔记"><a href="#论文阅读笔记" class="headerlink" title="论文阅读笔记"></a>论文阅读笔记</h1><p>原文中提到了几个未解决的问题，包括：</p>
+<ol>
+<li><p>学习的分子表示与指纹或描述符之间的比较，当前关于这个问题的研究结果并不明确。</p>
+</li>
+<li><p>目前的<strong>评估框架</strong>能否衡量方法在应用于新的化学空间时的泛化能力是一个问题。以及卷积模型可能会过度关注分子的结构或者重复出现的分子骨架，从而导致模型不能很好地<strong>泛化</strong>到新的、不同的分子。</p>
+</li>
+<li><p>如何对分子属性预测模型进行<strong>有意义的评估</strong>，以考虑训练数据和测试数据之间的叠合情况，<strong>以满足泛化要求</strong>。</p>
+</li>
+</ol>
+<p><strong>模型有两个显著特点：</strong>（1）它使用一种混合表示，结合了卷积和描述符，具有学习任务特定编码的灵活性，同时具有固定描述符的强先验。 （2）它通过在化学键上进行卷积而不是在原子上进行卷积来学习构建分子编码，从而避免在算法的消息传递阶段中出现不必要的循环。</p>
+<blockquote>
+<p>该论文通过设计一个<strong>全面的评估框架</strong>，旨在回答如何评估神经网络体系结构以及如何进行<strong>分子属性预测</strong>的问题。同时，该论文提出了一种新的算法，该算法在多个数据集上均优于现有的强基线模型。该模型具有两个独特的特征：（1）<strong>它结合了卷积和描述符</strong>，这使其具有学习任务特定编码的灵活性，同时提供了固定描述符的强先验知识。（2）<strong>它通过针对化学键而不是原子的卷积来学习构建分子编码</strong>，从而避免了在算法的信息传递阶段中出现不必要的循环。<br>该模型属于图卷积神经网络的一类，能够直接从数据中学习自己的专家特征表示，具有很高的灵活性和捕捉复杂关系的能力。在相关研究中，已经有很多关于分子属性预测的方法，如使用支持向量机和随机森林等模型来应用专业工程化的描述符或指纹，或者直接应用于SMILES字符串或分子的基础图中。该论文中的模型与Message Passing Neural Network (MPNN) 框架相似，<strong>但是在其基础上采用了基于更新有向键的表示的消息传递模式</strong>，并进一步将计算的分子级特征与MPNN学习的分子表示相结合，从而进一步提高了该模型的性能。</p>
+</blockquote>
+<p><img src="/2023/07/01/chemprop%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/DMPNN1.png"></p>
+<p>D-MPNN 的读出阶段与通用 MPNN 的读出阶段相同。在我们的读出函数 R 的实现中，首先将原子隐藏状态相加，得到分子的特征向量。</p>
+<p>在 D-MPNN 中，信息传递阶段通过有向边的信息传递，将图结构中的信息传递给下一层。而读出阶段是将这些信息从图结构中提取出来，形成对整个分子的表征。</p>
+<p>在该句话中，作者提到了在读出阶段的实现中，将原子隐藏状态相加来获得分子特征向量。这个特征向量可以被用来进一步进行分子属性预测等任务</p>
+<blockquote>
+<p>The readout phase of the D-MPNN is the same as the readout phase of a generic MPNN. In our implementation of the readout function R, we first sum the atom hidden states to obtain a feature vector for the molecule</p>
+</blockquote>
+<hr>
+<h1 id="第二部分-chemprop—DMPNN的实现库"><a href="#第二部分-chemprop—DMPNN的实现库" class="headerlink" title="第二部分 chemprop—DMPNN的实现库"></a>第二部分 chemprop—DMPNN的实现库</h1><p>在这篇研究中，他们提供了一个可以用于训练D-MPNN模型的python库。<a target="_blank" rel="noopener" href="https://github.com/chemprop/chemprop">https://github.com/chemprop/chemprop</a>，<a target="_blank" rel="noopener" href="https://chemprop.readthedocs.io/en/latest/">chemprop官方文档</a></p>
+<p>这篇文章就是我在学习这个库时做的笔记。</p>
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><p>在kevin的讲座中展示了chemprop的一个demo</p>
+<blockquote>
+<p>里面提到Chemprop has been applied in many subsequent publications, e.g.:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doi.org/10.1016/j.cell.2020.01.021">A Deep Learning Approach to Antibiotic Discovery</a></li>
+<li><a target="_blank" rel="noopener" href="https://doi.org/10.1021/acs.jcim.1c00975">Machine Learning of Reaction Properties via Learned Representations of the Condensed Graph of Reaction</a></li>
+<li><a target="_blank" rel="noopener" href="https://doi.org/10.1021/acs.jcim.1c00055">Predicting Infrared Spectra with Message Passing Neural Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://doi.org/10.1021/acs.jcim.1c01103">Group Contribution and Machine Learning Approaches to Predict Abraham Solute Parameters, Solvation Free Energy, and Solvation Enthalpy</a></li>
+<li><a target="_blank" rel="noopener" href="https://doi.org/10.1039/D1SC05677H">Multi-fidelity prediction of molecular optical peaks with deep learning</a></li>
+</ul>
+</blockquote>
+<p>demo中主要是展示了使用python script的方法对model进行训练和预测。</p>
+<ol>
+<li>模型训练</li>
+</ol>
+<p>模型训练时，可以将参数作为字符串列表传入。</p>
+<p>可设置参数很完善，具体见：<a target="_blank" rel="noopener" href="https://chemprop.readthedocs.io/en/latest/args.html#chemprop.args.TrainArgs">chemprop.args.TrainArgs</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">arguments = [</span><br><span class="line">    &#x27;--data_path&#x27;, &#x27;data/tox21.csv&#x27;,</span><br><span class="line">    &#x27;--dataset_type&#x27;, &#x27;classification&#x27;,</span><br><span class="line">    &#x27;--save_dir&#x27;, &#x27;tox21_checkpoints&#x27;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">args = chemprop.args.TrainArgs().parse_args(arguments)</span><br><span class="line">mean_score, std_score = chemprop.train.cross_validate(args=args, train_func=chemprop.train.run_training)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>模型预测</li>
+</ol>
+<p>模型预测大致有两步要走，首先是要加载预训练好的模型，然后是读取数据进行预测。</p>
+<p>可以通过两种方式读取分子信息作为输入”a list of smiles” or “a csv file”<br><em>使用一个csv</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arguments = [</span><br><span class="line">    &#x27;--test_path&#x27;, &#x27;data/tox21.csv&#x27;,</span><br><span class="line">    &#x27;--preds_path&#x27;, &#x27;tox21_preds.csv&#x27;,</span><br><span class="line">    &#x27;--checkpoint_dir&#x27;, &#x27;tox21_checkpoints&#x27;</span><br><span class="line">]</span><br><span class="line">args = chemprop.args.PredictArgs().parse_args(arguments)</span><br><span class="line">preds = chemprop.train.make_predictions(args=args)</span><br></pre></td></tr></table></figure>
+<p>如果你只想在脚本内部使用预测结果preds，而不保存文件，将preds_path设置为&#x2F;dev&#x2F;null。</p>
+<p><em>使用smiles列表进行预测</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import chemprop</span><br><span class="line"></span><br><span class="line">smiles = [[&#x27;CCC&#x27;], [&#x27;CCCC&#x27;], [&#x27;OCC&#x27;]]</span><br><span class="line">arguments = [</span><br><span class="line">    &#x27;--test_path&#x27;, &#x27;/dev/null&#x27;,</span><br><span class="line">    &#x27;--preds_path&#x27;, &#x27;/dev/null&#x27;,</span><br><span class="line">    &#x27;--checkpoint_dir&#x27;, &#x27;tox21_checkpoints&#x27;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">args = chemprop.args.PredictArgs().parse_args(arguments)</span><br><span class="line">preds = chemprop.train.make_predictions(args=args, smiles=smiles)</span><br></pre></td></tr></table></figure>
+<p>如果提供了一系列SMILES作为输入，给定的test_path将被丢弃。</p>
+<p>如果要连续预测多组分子，更高效的做法是只加载chemprop模型一次，然后使用预加载的模型进行预测。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import chemprop</span><br><span class="line"></span><br><span class="line">arguments = [</span><br><span class="line">    &#x27;--test_path&#x27;, &#x27;/dev/null&#x27;,</span><br><span class="line">    &#x27;--preds_path&#x27;, &#x27;/dev/null&#x27;,</span><br><span class="line">    &#x27;--checkpoint_dir&#x27;, &#x27;tox21_checkpoints&#x27;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">args = chemprop.args.PredictArgs().parse_args(arguments)</span><br><span class="line"></span><br><span class="line">model_objects = chemprop.train.load_model(args=args)</span><br><span class="line"></span><br><span class="line">smiles = [[&#x27;CCC&#x27;], [&#x27;CCCC&#x27;], [&#x27;OCC&#x27;]]</span><br><span class="line">preds = chemprop.train.make_predictions(args=args, smiles=smiles, model_objects=model_objects)</span><br><span class="line"></span><br><span class="line">smiles = [[&#x27;CCCC&#x27;], [&#x27;CCCCC&#x27;], [&#x27;COCC&#x27;]]</span><br><span class="line">preds = chemprop.train.make_predictions(args=args, smiles=smiles, model_objects=model_objects)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="超参数优化"><a href="#超参数优化" class="headerlink" title="超参数优化"></a>超参数优化</h2><blockquote>
+<p>MPNNs的性能，就像大多数神经网络一样，很大程度上取决于各种模型超参数的设置，例如神经网络层的隐藏大小。因此，为了最大化性能，我们使用Hyperopt49 Python包通过贝叶斯优化进行超参数优化。我们具体优化了模型的深度（消息传递步骤的数量）、隐藏大小（键消息向量的大小）、前馈网络层数以及丢弃概率。</p>
+</blockquote>
+<p>命令行制行超参数优化代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chemprop_hyperopt --data_path &lt;data_path&gt; --dataset_type &lt;type&gt; --num_iters &lt;n&gt; --config_save_path &lt;config_path&gt;</span><br></pre></td></tr></table></figure>
+<p>最后超参数优化结果会被以json的形式放入<config_path>中。</config_path></p>
+<blockquote>
+<p>请注意，超参数优化脚本会看到所有提供给它的数据。预期的使用方式是在训练集上运行超参数优化脚本。如果你需要为几个不同的交叉验证拆分分别优化超参数，你可以设置一个bash脚本，以在每个拆分的训练和验证数据上分别运行hyperparameter_optimization.py，并保留测试数据。<br>这种设置可以确保在每个拆分的训练和验证数据上进行超参数优化，并且最终的测试数据集仍然保持独立，用于评估模型的最终性能。通过这种方式，你可以获取对模型在不同数据集上性能的更准确评估，并选择适合整个数据集的最佳超参数配置。</p>
+</blockquote>
+<p>超参数优化接口<br><a target="_blank" rel="noopener" href="https://chemprop.readthedocs.io/en/latest/hyperopt.html">https://chemprop.readthedocs.io/en/latest/hyperopt.html</a></p>
+<p>可以直接使用命令行指令进行超参数优化。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%AF%92%E7%90%86%E5%AD%A6/">计算毒理学</a></div><div class="post_share"><div class="social-share" data-image="https://github.com/chemprop/chemprop/blob/master/docs/source/_static/images/chemprop_logo.svg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/06/16/%E6%88%8F%E5%89%A7%E5%8F%91%E5%B1%95%E5%92%8C%E5%BE%AA%E7%8E%AF%E7%BB%8F%E6%B5%8E/"><img class="next-cover" src="https://s2.loli.net/2023/06/12/gsKwuHYpAhRLOc2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">戏剧发展和循环经济 6-16</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/Avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">驴哲君</div><div class="author-info__description">玉石桥斜倚把栏杆靠</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">论文阅读笔记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86-chemprop%E2%80%94DMPNN%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%BA%93"><span class="toc-number">2.</span> <span class="toc-text">第二部分 chemprop—DMPNN的实现库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#demo"><span class="toc-number">2.1.</span> <span class="toc-text">demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96"><span class="toc-number">2.2.</span> <span class="toc-text">超参数优化</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/07/01/chemprop%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="chemprop学习笔记"><img src="https://github.com/chemprop/chemprop/blob/master/docs/source/_static/images/chemprop_logo.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="chemprop学习笔记"/></a><div class="content"><a class="title" href="/2023/07/01/chemprop%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="chemprop学习笔记">chemprop学习笔记</a><time datetime="2023-07-01T11:00:54.000Z" title="发表于 2023-07-01 19:00:54">2023-07-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/16/%E6%88%8F%E5%89%A7%E5%8F%91%E5%B1%95%E5%92%8C%E5%BE%AA%E7%8E%AF%E7%BB%8F%E6%B5%8E/" title="戏剧发展和循环经济 6-16"><img src="https://s2.loli.net/2023/06/12/gsKwuHYpAhRLOc2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="戏剧发展和循环经济 6-16"/></a><div class="content"><a class="title" href="/2023/06/16/%E6%88%8F%E5%89%A7%E5%8F%91%E5%B1%95%E5%92%8C%E5%BE%AA%E7%8E%AF%E7%BB%8F%E6%B5%8E/" title="戏剧发展和循环经济 6-16">戏剧发展和循环经济 6-16</a><time datetime="2023-06-15T16:23:53.000Z" title="发表于 2023-06-16 00:23:53">2023-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/12/%E9%97%B2%E6%B8%B8%E6%95%A3%E8%AE%B0/" title="散记---6.12"><img src="https://cdn.pixabay.com/photo/2014/11/22/09/07/the-national-palace-museum-541501_640.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="散记---6.12"/></a><div class="content"><a class="title" href="/2023/06/12/%E9%97%B2%E6%B8%B8%E6%95%A3%E8%AE%B0/" title="散记---6.12">散记---6.12</a><time datetime="2023-06-12T13:49:49.000Z" title="发表于 2023-06-12 21:49:49">2023-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/11/%E7%8E%AF%E5%A2%83%E5%B7%A5%E7%A8%8B-%E5%B0%8F%E9%95%87%E5%81%9A%E9%A2%98%E5%AE%B6%E7%9A%84%E6%81%B6%E9%AD%94/" title="环境工程--小镇做题家的恶魔"><img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="环境工程--小镇做题家的恶魔"/></a><div class="content"><a class="title" href="/2023/06/11/%E7%8E%AF%E5%A2%83%E5%B7%A5%E7%A8%8B-%E5%B0%8F%E9%95%87%E5%81%9A%E9%A2%98%E5%AE%B6%E7%9A%84%E6%81%B6%E9%AD%94/" title="环境工程--小镇做题家的恶魔">环境工程--小镇做题家的恶魔</a><time datetime="2023-06-11T06:52:11.000Z" title="发表于 2023-06-11 14:52:11">2023-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/11/%E7%83%B9%E9%9B%AA%E6%8E%87%E7%8E%89%E9%9B%86%E4%BA%8C/" title="烹雪掇玉集(二)"><img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.BLgwC3y-Sr3pRehnBTNkgwHaE6?w=286&amp;h=190&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.3&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="烹雪掇玉集(二)"/></a><div class="content"><a class="title" href="/2023/06/11/%E7%83%B9%E9%9B%AA%E6%8E%87%E7%8E%89%E9%9B%86%E4%BA%8C/" title="烹雪掇玉集(二)">烹雪掇玉集(二)</a><time datetime="2023-06-10T16:47:45.000Z" title="发表于 2023-06-11 00:47:45">2023-06-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 驴哲君</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><script type="text/javascript" src="/js/cursor.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
